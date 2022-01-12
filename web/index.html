@@ -33,10 +33,36 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
+    
+
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+       <script>
+        //import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
+        //import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+    
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAUWSxDSGaxL57M4mlMm681dWI6A-qb3K4",
+          authDomain: "rmba-8c14e.firebaseapp.com",
+          projectId: "rmba-8c14e",
+          storageBucket: "rmba-8c14e.appspot.com",
+          messagingSenderId: "903308750260",
+          appId: "1:903308750260:web:9de3eca7abff75f95d16e1",
+          measurementId: "G-DJ823X2XTD"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);</script>
+        <script>
+    // Import the functions you need from the SDKs you need
+  
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {

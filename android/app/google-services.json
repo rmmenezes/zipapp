@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "903308750260",
+    "project_id": "rmba-8c14e",
+    "storage_bucket": "rmba-8c14e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903308750260:android:14cad6245a1ca4f25d16e1",
+        "android_client_info": {
+          "package_name": "zipcursos.zipcursos.zipcursos_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903308750260-m66vcbt8r0pncpp6ug5acu43j6p1vu61.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zipcursos.zipcursos.zipcursos_app",
+            "certificate_hash": "8b27a23815ceebc6b0c33b8c1b132595843ec743"
+          }
+        },
+        {
+          "client_id": "903308750260-qs7reef27jhqg675gs61l0di1r5kkbr5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiF783GUf-gKw6SvGaj-BWTAG97AZwVgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903308750260-qs7reef27jhqg675gs61l0di1r5kkbr5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
