@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/models/student.dart';
+import 'package:zipcursos_app/util/colors.dart';
 import 'package:zipcursos_app/util/fonts.dart';
-import 'package:zipcursos_app/view/widgets/AppBar_and_SideBarMenu/customAppBar.dart';
-import 'package:zipcursos_app/view/widgets/AppBar_and_SideBarMenu/mydrawer.dart';
-import 'package:zipcursos_app/view/widgets/studentCard.dart';
-import 'package:pagination_view/pagination_view.dart';
+import 'package:zipcursos_app/view/widgets/lists/listStudentsRankingCardsRow.dart';
+import 'package:zipcursos_app/view/widgets/menus/customAppBar.dart';
+import 'package:zipcursos_app/view/widgets/menus/mydrawer.dart';
 
 class RankingPage extends StatefulWidget {
   final StudentModel student;
@@ -15,10 +15,51 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  final Color colorGold = Colors.yellow.shade600;
-  final Color colorBronze = Colors.brown.shade400;
-  final Color colorSilver = Colors.grey.shade400;
-  final Color colorGray = Colors.grey.shade50;
+  List<StudentModel> items = [
+    StudentModel(
+        name: "Rafael Menezes",
+        photoURL:
+            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
+        email: "ra29fa@gmail.com",
+        barcode: "1010"),
+    StudentModel(
+        name: "Rafael Menezes",
+        photoURL:
+            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
+        email: "ra29fa@gmail.com",
+        barcode: "1010"),
+    StudentModel(
+        name: "Rafael Menezes",
+        photoURL:
+            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
+        email: "ra29fa@gmail.com",
+        barcode: "1010"),
+    StudentModel(
+        name: "Rafael Menezes",
+        photoURL:
+            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
+        email: "ra29fa@gmail.com",
+        barcode: "1010"),
+    StudentModel(
+        name: "Rafael Menezes",
+        photoURL:
+            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
+        email: "ra29fa@gmail.com",
+        barcode: "1010"),
+    StudentModel(
+        name: "Rafael Menezes",
+        photoURL:
+            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
+        email: "ra29fa@gmail.com",
+        barcode: "1010"),
+    StudentModel(
+        name: "Rafael Menezes",
+        photoURL:
+            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
+        email: "ra29fa@gmail.com",
+        barcode: "1010"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,25 +87,25 @@ class _RankingPageState extends State<RankingPage> {
                       width: 40.0,
                       height: 10.0,
                       decoration: BoxDecoration(
-                          color: colorGold, shape: BoxShape.rectangle)),
-                  const Text("Prata:"),
-                  Container(
-                      width: 40.0,
-                      height: 10.0,
-                      decoration: BoxDecoration(
-                          color: colorBronze, shape: BoxShape.rectangle)),
+                          color: CustomColors().colorGold,
+                          shape: BoxShape.rectangle)),
                   const Text("Bronze:"),
                   Container(
                       width: 40.0,
                       height: 10.0,
                       decoration: BoxDecoration(
-                          color: colorSilver, shape: BoxShape.rectangle)),
+                          color: CustomColors().colorBronze,
+                          shape: BoxShape.rectangle)),
+                  const Text("Prata:"),
+                  Container(
+                      width: 40.0,
+                      height: 10.0,
+                      decoration: BoxDecoration(
+                          color: CustomColors().colorSilver,
+                          shape: BoxShape.rectangle)),
                 ]),
             const Divider(),
-            StudentCardRow(student: widget.student, colorPodium: colorGold),
-            StudentCardRow(student: widget.student, colorPodium: colorBronze),
-            StudentCardRow(student: widget.student, colorPodium: colorSilver),
-            StudentCardRow(student: widget.student, colorPodium: colorGray)
+            ListStudentsRankingCardsRow(items: items),
           ],
         ),
       ),

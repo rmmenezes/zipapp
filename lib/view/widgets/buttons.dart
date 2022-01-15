@@ -6,7 +6,7 @@ class buttonGerator extends StatelessWidget {
   final double fontSize;
   final Color backgroundColor;
   final Function() onClickFuncion;
-  final Image iconButton;
+  final Image? iconButton;
   final bool outlineButtonTheme;
 
   const buttonGerator({
@@ -15,7 +15,7 @@ class buttonGerator extends StatelessWidget {
     this.fontSize = 20.0,
     this.backgroundColor = Colors.orange,
     required this.onClickFuncion,
-    required this.iconButton,
+    this.iconButton,
     this.outlineButtonTheme = false,
   });
 
@@ -47,7 +47,8 @@ class buttonGerator extends StatelessWidget {
               : MainAxisAlignment.center,
           children: <Widget>[
             Text(text, style: textStyle),
-            if (iconButton != null) iconButton,
+            if (iconButton != null)
+              SizedBox(height: 25, width: 25, child: iconButton),
           ],
         ),
       ),

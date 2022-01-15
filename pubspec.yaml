@@ -35,7 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   barcode_widget: ^2.0.2
   google_fonts: ^2.2.0
-  pagination_view: ^2.0.0
+  infinite_scroll_pagination: ^3.1.0
   
 
   

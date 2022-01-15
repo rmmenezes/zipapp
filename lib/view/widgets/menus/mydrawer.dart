@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/fonts.dart';
+import 'package:zipcursos_app/view/profile_page.dart';
 
 import '../../ranking_page.dart';
 
@@ -43,6 +44,26 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.dashboard_rounded),
             title: const Text('Ranking'),
+            onTap: () => {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RankingPage(student: student)))
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.dashboard_rounded),
+            title: const Text('Perfil'),
+            onTap: () => {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProfilePage(student: student)))
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.dashboard_rounded),
+            title: const Text('----'),
             onTap: () => {
               Navigator.push(
                   context,

@@ -11,7 +11,7 @@ class StudentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 25, 25, 25),
+      padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
       child: Card(
         elevation: 10,
         color: Colors.blueGrey[50],
@@ -23,11 +23,7 @@ class StudentCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.network(
-                  "https://logosmarcas.net/wp-content/uploads/2021/08/Android-Logo.png",
-                  fit: BoxFit.cover,
-                  height: 100.0,
-                  width: 230.0),
+              const Image(image: AssetImage("assets/logo_zip.jpg"),height: 100,),
               const SizedBox(height: 50),
               Image.network(student.photoURL,
                   fit: BoxFit.cover, height: 200.0, width: 200.0),
@@ -44,9 +40,13 @@ class StudentCard extends StatelessWidget {
 class StudentCardRow extends StatelessWidget {
   final StudentModel student;
   final Color colorPodium;
+  int podiumPosition;
   // ignore: prefer_const_constructors_in_immutables
   StudentCardRow(
-      {Key? key, required this.student, this.colorPodium = Colors.greenAccent})
+      {Key? key,
+      required this.student,
+      this.colorPodium = Colors.greenAccent,
+      this.podiumPosition = -1})
       : super(key: key);
 
   @override
@@ -62,21 +62,29 @@ class StudentCardRow extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Image.network(student.photoURL,
-                    fit: BoxFit.cover, height: 80.0, width: 80.0),
-                VerticalDivider(color: colorPodium),
-                Column(
-                  children: [
-                    Text("Nome: " + student.name, style: Fonts.h2b),
-                    Text("Número: " + student.barcode, style: Fonts.h3b),
-                    Text("Pontos: " + student.barcode, style: Fonts.h4b),
-                  ],
-                ),
-              ]),
+          child: Row(children: [
+            const SizedBox(width: 10),
+            podiumPosition > 0
+                ? Row(children: [
+                    Text(podiumPosition.toString() + "º", style: Fonts.h4b)
+                  ])
+                : const SizedBox(),
+            const SizedBox(width: 10),
+            Container(
+                width: 80.0,
+                height: 80.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: NetworkImage(student.photoURL)),
+                  borderRadius: const BorderRadius.all(Radius.circular(100.0)),
+                  color: Colors.redAccent,
+                )),
+            VerticalDivider(color: colorPodium),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(student.name, style: Fonts.h2b),
+              Text("Pontos: " + student.barcode, style: Fonts.h4),
+            ]),
+          ]),
         ),
       ),
     );

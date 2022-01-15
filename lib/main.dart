@@ -4,6 +4,7 @@ import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:zipcursos_app/view/ranking_page.dart';
+import 'package:zipcursos_app/view/register_student_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final StudentModel student = StudentModel(
+    StudentModel student = StudentModel(
         name: "Rafael Menezes Barboza",
         email: "ra29fa@gmail.com",
         photoURL:
@@ -40,6 +41,6 @@ class MyApp extends StatelessWidget {
         title: 'Zip Cursos',
         theme: ThemeData(
             primarySwatch: Colors.orange, backgroundColor: Colors.white),
-        home: RankingPage(student: student));
+        home: HomePage(student: student));
   }
 }
