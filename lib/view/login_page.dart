@@ -53,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                                   .pushReplacement(MaterialPageRoute(
                                       builder: (context) => HomePage(
                                             student: StudentModel(
+                                                uid: user.uid,
                                                 name:
                                                     user.displayName.toString(),
                                                 email: user.email.toString(),

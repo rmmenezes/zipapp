@@ -3,6 +3,7 @@ import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:zipcursos_app/view/profile_page.dart';
 import 'package:zipcursos_app/view/ranking_page.dart';
 import 'package:zipcursos_app/view/register_student_page.dart';
 
@@ -41,6 +42,6 @@ class MyApp extends StatelessWidget {
         title: 'Zip Cursos',
         theme: ThemeData(
             primarySwatch: Colors.orange, backgroundColor: Colors.white),
-        home: HomePage(student: student));
+        home: const LoginPage());
   }
 }

@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   final StudentModel student;
@@ -32,8 +35,33 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.all(25.0),
         child: Column(children: [
           InkWell(
-            onTap: () {
-              print("object");
+            onTap: () async {
+              XFile? file;
+              await showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                          content: const Text("Escolha a fonte da imagem"),
+                          actions: [
+                            InkWell(
+                                child: const Text("Câmera"),
+                                onTap: () async {
+                                  file = await ImagePicker()
+                                      .pickImage(source: ImageSource.camera);
+                                  Navigator.pop(context);
+                                }),
+                            InkWell(
+                                child: const Text("Galeria"),
+                                onTap: () async {
+                                  file = await ImagePicker()
+                                      .pickImage(source: ImageSource.gallery);
+                                  Navigator.pop(context);
+                                }),
+                          ]));
+
+              String a = await StudentController(
+                      student: widget.student, f: File(file!.path))
+                  .uploadProfilePicure();
+              print(await a);
             },
             child: Container(
               width: 150.0,

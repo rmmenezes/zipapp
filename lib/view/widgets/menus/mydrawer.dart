@@ -4,6 +4,7 @@ import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/profile_page.dart';
 
 import '../../ranking_page.dart';
+import '../../set_grade_1.dart';
 
 class MyDrawer extends StatelessWidget {
   final StudentModel student;
@@ -63,12 +64,12 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.dashboard_rounded),
-            title: const Text('----'),
+            title: const Text("Marcar Nota 10"),
             onTap: () => {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RankingPage(student: student)))
+                      builder: (context) => const SetGrade10Page()))
             },
           ),
         ],

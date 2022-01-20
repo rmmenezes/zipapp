@@ -23,6 +23,9 @@ class _HomePageState extends State<HomePage> {
         ],
         appBar: MyAppBar(title: "Página Inicial"),
         drawer: MyDrawer(student: widget.student),
-        body: StudentCard(student: widget.student));
+        body: Container(
+          color: Colors.blueGrey[50],
+          child: StudentCard(student: widget.student),
+        ));
   }
 }

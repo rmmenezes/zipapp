@@ -11,10 +11,10 @@ class StudentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
+      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
       child: Card(
         elevation: 10,
-        color: Colors.blueGrey[50],
+        color: Colors.white,
         shadowColor: Colors.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
@@ -23,7 +23,10 @@ class StudentCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Image(image: AssetImage("assets/logo_zip.jpg"),height: 100,),
+              const Image(
+                image: AssetImage("assets/logo_zip.jpg"),
+                height: 100,
+              ),
               const SizedBox(height: 50),
               Image.network(student.photoURL,
                   fit: BoxFit.cover, height: 200.0, width: 200.0),
