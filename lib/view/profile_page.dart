@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:html';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
@@ -16,10 +17,16 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool editable = false;
+  String photo =
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg";
+
+  TextEditingController nameController = TextEditingController();
+  late File file;
 
   @override
   void initState() {
     editable = false;
+    nameController.text = widget.student.name;
     super.initState();
   }
 
@@ -36,7 +43,6 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(children: [
           InkWell(
             onTap: () async {
-              XFile? file;
               await showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
@@ -45,33 +51,27 @@ class _ProfilePageState extends State<ProfilePage> {
                             InkWell(
                                 child: const Text("Câmera"),
                                 onTap: () async {
-                                  file = await ImagePicker()
-                                      .pickImage(source: ImageSource.camera);
+                                  File? f = (await ImagePicker().pickImage(
+                                      source: ImageSource.camera)) as File?;
                                   Navigator.pop(context);
                                 }),
                             InkWell(
                                 child: const Text("Galeria"),
                                 onTap: () async {
-                                  file = await ImagePicker()
-                                      .pickImage(source: ImageSource.gallery);
+                                  File? f = (await ImagePicker().pickImage(
+                                      source: ImageSource.gallery)) as File?;
                                   Navigator.pop(context);
                                 }),
                           ]));
-
-              String a = await StudentController(
-                      student: widget.student, f: File(file!.path))
-                  .uploadProfilePicure();
-              print(await a);
             },
             child: Container(
-              width: 150.0,
-              height: 150.0,
+              width: 170.0,
+              height: 170.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(widget.student.photoURL)),
+                    image: NetworkImage(widget.student.photo)),
                 borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-                color: Colors.redAccent,
               ),
             ),
           ),
@@ -92,8 +92,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           const SizedBox(height: 40),
           TextFormField(
+            controller: nameController,
             enabled: editable,
-            initialValue: widget.student.name,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
             decoration: const InputDecoration(
@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            enabled: editable,
+            enabled: false,
             initialValue: widget.student.email,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
@@ -120,7 +120,27 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           const SizedBox(height: 20),
           editable == true
-              ? buttonGerator(text: "Salvar Edição", onClickFuncion: () {})
+              ? buttonGerator(
+                  text: "Salvar Edição",
+                  onClickFuncion: () async {
+                    try {
+                      await StudentController().updateStudent(
+                          widget.student.uid, nameController.text, photo);
+                      // confirma
+                      await CoolAlert.show(
+                          loopAnimation: false,
+                          context: context,
+                          type: CoolAlertType.success,
+                          text: "Editado com Sucesso!!");
+                    } on Exception {
+                      // erro
+                      await CoolAlert.show(
+                          loopAnimation: false,
+                          context: context,
+                          type: CoolAlertType.error,
+                          text: "Erro!!");
+                    }
+                  })
               : const SizedBox(),
         ]),
       ),

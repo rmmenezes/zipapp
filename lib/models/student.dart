@@ -2,14 +2,14 @@ class StudentModel {
   String uid;
   String name;
   String email;
-  String photoURL;
+  String photo;
   String barcode;
 
   StudentModel({
-    required this.name,
+    this.name = '',
     this.uid = '',
     this.email = '',
-    this.photoURL = '',
+    this.photo = '',
     this.barcode = '',
   });
 }

@@ -1,18 +1,48 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
+import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
-import 'widgets/menus/mydrawer.dart';
 
 class RegisterStudentPage extends StatefulWidget {
-  StudentModel student;
-  RegisterStudentPage({Key? key, required this.student}) : super(key: key);
+  String? nome;
+  String? email;
+  String? photo;
+  String? uid;
+
+  RegisterStudentPage({
+    Key? key,
+    this.nome = "",
+    this.email = "",
+    this.uid = "",
+    this.photo = "",
+  }) : super(key: key);
   @override
   _RegisterStudentPageState createState() => _RegisterStudentPageState();
 }
 
 class _RegisterStudentPageState extends State<RegisterStudentPage> {
   bool isConfirmPasswordVisible = false;
+  String photo =
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg";
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController barcodeController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.photo != null) {
+      nameController.text = widget.nome!;
+      emailController.text = widget.email!;
+      photo = widget.photo!;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,16 +55,12 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
           padding: const EdgeInsets.all(25.0),
           child: Column(children: [
             InkWell(
-              onTap: () {
-                print("object");
-              },
               child: Container(
                 width: 150.0,
                 height: 150.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(widget.student.photoURL)),
+                      fit: BoxFit.cover, image: NetworkImage(photo)),
                   borderRadius: const BorderRadius.all(Radius.circular(100.0)),
                   color: Colors.redAccent,
                 ),
@@ -42,7 +68,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             ),
             const SizedBox(height: 40),
             TextFormField(
-              initialValue: widget.student.name,
+              controller: nameController,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
@@ -51,7 +77,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             ),
             const SizedBox(height: 20),
             TextFormField(
-              initialValue: widget.student.email,
+              controller: emailController,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
@@ -59,14 +85,44 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             ),
             const SizedBox(height: 20),
             TextFormField(
-              initialValue: widget.student.barcode,
+              controller: barcodeController,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                   labelText: 'Número:', icon: Icon(Icons.format_list_numbered)),
             ),
             const SizedBox(height: 20),
-            buttonGerator(text: "Confirmar Cadastro", onClickFuncion: () {})
+            buttonGerator(
+                text: "Confirmar Cadastro",
+                onClickFuncion: () async {
+                  try {
+                    // registra
+                    StudentModel student = await StudentController()
+                        .registerStudent(
+                            widget.uid.toString(),
+                            nameController.text,
+                            emailController.text,
+                            photo,
+                            barcodeController.text);
+                    // confirma
+                    await CoolAlert.show(
+                        loopAnimation: false,
+                        context: context,
+                        type: CoolAlertType.success,
+                        text: "Registrado com Sucesso!!");
+                    // go home page
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage(student: student)));
+                  } on Exception {
+                    await CoolAlert.show(
+                        loopAnimation: false,
+                        context: context,
+                        type: CoolAlertType.error,
+                        text: "Erro!!");
+                  }
+                })
           ]),
         ));
   }

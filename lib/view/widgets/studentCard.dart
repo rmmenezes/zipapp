@@ -28,7 +28,7 @@ class StudentCard extends StatelessWidget {
                 height: 100,
               ),
               const SizedBox(height: 50),
-              Image.network(student.photoURL,
+              Image.network(student.photo,
                   fit: BoxFit.cover, height: 200.0, width: 200.0),
               const SizedBox(height: 10),
               Text(student.name, style: Fonts.h1b),
@@ -78,7 +78,7 @@ class StudentCardRow extends StatelessWidget {
                 height: 80.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.cover, image: NetworkImage(student.photoURL)),
+                      fit: BoxFit.cover, image: NetworkImage(student.photo)),
                   borderRadius: const BorderRadius.all(Radius.circular(100.0)),
                   color: Colors.redAccent,
                 )),

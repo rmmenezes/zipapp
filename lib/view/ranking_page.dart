@@ -18,43 +18,43 @@ class _RankingPageState extends State<RankingPage> {
   List<StudentModel> items = [
     StudentModel(
         name: "Rafael Menezes",
-        photoURL:
+        photo:
             "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
         email: "ra29fa@gmail.com",
         barcode: "1010"),
     StudentModel(
         name: "Rafael Menezes",
-        photoURL:
+        photo:
             "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
         email: "ra29fa@gmail.com",
         barcode: "1010"),
     StudentModel(
         name: "Rafael Menezes",
-        photoURL:
+        photo:
             "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
         email: "ra29fa@gmail.com",
         barcode: "1010"),
     StudentModel(
         name: "Rafael Menezes",
-        photoURL:
+        photo:
             "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
         email: "ra29fa@gmail.com",
         barcode: "1010"),
     StudentModel(
         name: "Rafael Menezes",
-        photoURL:
+        photo:
             "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
         email: "ra29fa@gmail.com",
         barcode: "1010"),
     StudentModel(
         name: "Rafael Menezes",
-        photoURL:
+        photo:
             "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
         email: "ra29fa@gmail.com",
         barcode: "1010"),
     StudentModel(
         name: "Rafael Menezes",
-        photoURL:
+        photo:
             "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
         email: "ra29fa@gmail.com",
         barcode: "1010"),

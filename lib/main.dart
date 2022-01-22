@@ -11,15 +11,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Firebase.apps.isEmpty) {
     Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyAUWSxDSGaxL57M4mlMm681dWI6A-qb3K4",
-          authDomain: "rmba-8c14e.firebaseapp.com",
-          projectId: "rmba-8c14e",
-          storageBucket: "rmba-8c14e.appspot.com",
-          messagingSenderId: "903308750260",
-          appId: "1:903308750260:web:9de3eca7abff75f95d16e1",
-          measurementId: "G-DJ823X2XTD"),
-    );
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyAUWSxDSGaxL57M4mlMm681dWI6A-qb3K4",
+            authDomain: "rmba-8c14e.firebaseapp.com",
+            projectId: "rmba-8c14e",
+            storageBucket: "rmba-8c14e.appspot.com",
+            messagingSenderId: "903308750260",
+            appId: "1:903308750260:web:9de3eca7abff75f95d16e1",
+            measurementId: "G-DJ823X2XTD"));
   } else {
     Firebase.app(); // if already initialized, use that one
   }
@@ -34,7 +33,7 @@ class MyApp extends StatelessWidget {
     StudentModel student = StudentModel(
         name: "Rafael Menezes Barboza",
         email: "ra29fa@gmail.com",
-        photoURL:
+        photo:
             "https://e7.pngegg.com/pngimages/498/300/png-clipart-hackers-security-hacker-wifi-password-hacker-prank-android-computer-icons-android-computer-network-internet-thumbnail.png",
         barcode: "1234");
     return MaterialApp(
