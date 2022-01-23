@@ -18,8 +18,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool editable = false;
-  String photo =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg";
+  String photo = "";
 
   TextEditingController nameController = TextEditingController();
   final imagePicker = ImagePicker();
@@ -28,6 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     editable = false;
+    photo = widget.student.photo.toString();
     nameController.text = widget.student.name;
     super.initState();
   }
@@ -45,42 +45,63 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(children: [
           InkWell(
             onTap: () async {
-              await showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                          content: const Text("Escolha a fonte da imagem"),
-                          actions: [
-                            InkWell(
-                                child: const Text("Câmera"),
-                                onTap: () async {
-                                  var f = (await ImagePicker()
-                                      .pickImage(source: ImageSource.camera));
-                                  File ff = File(f!.path);
-                                  print(ff);
-                                  setState(() {
-                                    photo = ff.path;
-                                  });
+              if (editable) {
+                await showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                            content: const Text("Escolha a fonte da imagem"),
+                            actions: [
+                              InkWell(
+                                  child: const Text("Câmera"),
+                                  onTap: () async {
+                                    var f = (await ImagePicker()
+                                        .pickImage(source: ImageSource.camera));
+                                    File ff = File(f!.path);
+                                    setState(() {
+                                      photo = ff.path;
+                                    });
+                                    String p = await StudentController()
+                                        .uploadProfilePicure(
+                                            widget.student.uid, ff);
 
-                                  StudentController().uploadProfilePicure(
-                                      widget.student.uid, ff);
+                                    setState(() {
+                                      photo = p;
+                                    });
+                                    Navigator.pop(context);
+                                  }),
+                              InkWell(
+                                  child: const Text("Galeria"),
+                                  onTap: () async {
+                                    var f = (await ImagePicker().pickImage(
+                                        source: ImageSource.gallery));
+                                    File ff = File(f!.path);
+                                    setState(() {
+                                      photo = ff.path;
+                                    });
+                                    String p = await StudentController()
+                                        .uploadProfilePicure(
+                                            widget.student.uid, ff);
 
-                                  Navigator.pop(context);
-                                }),
-                            InkWell(
-                                child: const Text("Galeria"),
-                                onTap: () async {
-                                  File? f = (await ImagePicker().pickImage(
-                                      source: ImageSource.gallery)) as File?;
-                                  Navigator.pop(context);
-                                }),
-                          ]));
+                                    setState(() {
+                                      photo = p;
+                                    });
+                                    Navigator.pop(context);
+                                  }),
+                            ]));
+              }
             },
             child: Container(
+              padding: const EdgeInsets.all(20.0),
               width: 170.0,
               height: 170.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover, image: NetworkImage(photo)),
+                boxShadow: [
+                  editable == true
+                      ? const BoxShadow(color: Colors.orange, spreadRadius: 4)
+                      : const BoxShadow(color: Colors.orange, spreadRadius: 0),
+                ],
                 borderRadius: const BorderRadius.all(Radius.circular(100.0)),
               ),
             ),
@@ -104,9 +125,12 @@ class _ProfilePageState extends State<ProfilePage> {
           TextFormField(
             controller: nameController,
             enabled: editable,
-            keyboardType: TextInputType.text,
+            keyboardType: TextInputType.name,
             textInputAction: TextInputAction.done,
             decoration: const InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.orange, width: 1),
+                ),
                 labelText: 'Nome Completo:',
                 icon: Icon(Icons.account_circle_outlined)),
           ),
@@ -114,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
           TextFormField(
             enabled: false,
             initialValue: widget.student.email,
-            keyboardType: TextInputType.text,
+            keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.done,
             decoration: const InputDecoration(
                 labelText: 'Email:', icon: Icon(Icons.email)),
@@ -123,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
           TextFormField(
             enabled: false,
             initialValue: widget.student.barcode,
-            keyboardType: TextInputType.text,
+            keyboardType: TextInputType.number,
             textInputAction: TextInputAction.done,
             decoration: const InputDecoration(
                 labelText: 'Número:', icon: Icon(Icons.format_list_numbered)),
@@ -136,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   onClickFuncion: () async {
                     try {
                       await StudentController().updateStudent(
-                          widget.student.uid, nameController.text, photo);
+                          widget.student.uid, nameController.text);
                       // confirma
                       await CoolAlert.show(
                           loopAnimation: false,

@@ -6,14 +6,16 @@ import 'package:zipcursos_app/models/student.dart';
 
 class StudentController {
   Future<String> uploadProfilePicure(String uid, File file) async {
-    print(file);
-    print(file.path);
-    //await FirebaseStorage.instance.ref().child("students/photos/$uid").delete();
+    await FirebaseStorage.instance.ref().child("students/photos/$uid").delete();
     var taskSnapshot = await FirebaseStorage.instance
         .ref()
         .child("students/photos/$uid")
         .putFile(file);
     var imageUrl = await (taskSnapshot).ref.getDownloadURL();
+    print(imageUrl);
+    await FirebaseFirestore.instance.collection('students').doc(uid).update({
+      'photo': imageUrl,
+    });
     return imageUrl.toString();
   }
 
@@ -42,11 +44,10 @@ class StudentController {
     return student;
   }
 
-  Future<bool> updateStudent(String uid, String name, String photo) async {
+  Future<bool> updateStudent(String uid, String name) async {
     try {
       await FirebaseFirestore.instance.collection('students').doc(uid).update({
         'name': name,
-        'photo': photo,
       });
       return true;
     } on Exception {
