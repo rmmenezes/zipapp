@@ -2,21 +2,32 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:zipcursos_app/models/student.dart';
 
 class StudentController {
-  Future<String> uploadProfilePicure(String uid, File file) async {
-    await FirebaseStorage.instance.ref().child("students/photos/$uid").delete();
-    var taskSnapshot = await FirebaseStorage.instance
-        .ref()
-        .child("students/photos/$uid")
-        .putFile(file);
-    var imageUrl = await (taskSnapshot).ref.getDownloadURL();
-    print(imageUrl);
+  Future<String> uploadProfilePicure(String uid, PickedFile pickedFile) async {
+    String uploadedPhotoUrl = '';
+    if (kIsWeb) {
+      Reference _reference =
+          FirebaseStorage.instance.ref().child("students/photos/" + uid);
+      await _reference
+          .putData(
+        await pickedFile.readAsBytes(),
+        SettableMetadata(contentType: 'image/jpeg'),
+      )
+          .whenComplete(() async {
+        await _reference.getDownloadURL().then((value) {
+          uploadedPhotoUrl = value;
+          return uploadedPhotoUrl;
+        });
+      });
+    }
     await FirebaseFirestore.instance.collection('students').doc(uid).update({
-      'photo': imageUrl,
+      'photo': uploadedPhotoUrl,
     });
-    return imageUrl.toString();
+    return uploadedPhotoUrl;
   }
 
   Future<bool> checkIfUserExist(User user) async {

@@ -4,6 +4,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
+import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,14 +22,14 @@ class _ProfilePageState extends State<ProfilePage> {
   String photo = "";
 
   TextEditingController nameController = TextEditingController();
-  final imagePicker = ImagePicker();
-  late File imageFile;
+  late var photoChanged;
 
   @override
   void initState() {
     editable = false;
     photo = widget.student.photo.toString();
     nameController.text = widget.student.name;
+    photoChanged = null;
     super.initState();
   }
 
@@ -54,36 +55,26 @@ class _ProfilePageState extends State<ProfilePage> {
                               InkWell(
                                   child: const Text("Câmera"),
                                   onTap: () async {
-                                    var f = (await ImagePicker()
-                                        .pickImage(source: ImageSource.camera));
-                                    File ff = File(f!.path);
+                                    PickedFile? pickedFile =
+                                        await ImagePicker().getImage(
+                                      source: ImageSource.camera,
+                                    );
                                     setState(() {
-                                      photo = ff.path;
-                                    });
-                                    String p = await StudentController()
-                                        .uploadProfilePicure(
-                                            widget.student.uid, ff);
-
-                                    setState(() {
-                                      photo = p;
+                                      photo = pickedFile!.path;
+                                      photoChanged = pickedFile;
                                     });
                                     Navigator.pop(context);
                                   }),
                               InkWell(
                                   child: const Text("Galeria"),
                                   onTap: () async {
-                                    var f = (await ImagePicker().pickImage(
-                                        source: ImageSource.gallery));
-                                    File ff = File(f!.path);
+                                    PickedFile? pickedFile =
+                                        await ImagePicker().getImage(
+                                      source: ImageSource.gallery,
+                                    );
                                     setState(() {
-                                      photo = ff.path;
-                                    });
-                                    String p = await StudentController()
-                                        .uploadProfilePicure(
-                                            widget.student.uid, ff);
-
-                                    setState(() {
-                                      photo = p;
+                                      photo = pickedFile!.path;
+                                      photoChanged = pickedFile;
                                     });
                                     Navigator.pop(context);
                                   }),
@@ -159,14 +150,26 @@ class _ProfilePageState extends State<ProfilePage> {
                   text: "Salvar Edição",
                   onClickFuncion: () async {
                     try {
-                      await StudentController().updateStudent(
-                          widget.student.uid, nameController.text);
+                      if (photoChanged != null) {
+                        await StudentController().updateStudent(
+                            widget.student.uid, nameController.text);
+                        await StudentController().uploadProfilePicure(
+                            widget.student.uid, photoChanged);
+                      } else {
+                        await StudentController().updateStudent(
+                            widget.student.uid, nameController.text);
+                      }
                       // confirma
                       await CoolAlert.show(
                           loopAnimation: false,
                           context: context,
                           type: CoolAlertType.success,
                           text: "Editado com Sucesso!!");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  HomePage(student: widget.student)));
                     } on Exception {
                       // erro
                       await CoolAlert.show(
