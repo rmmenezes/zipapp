@@ -35,24 +35,24 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                        height: 200.0,
+                        height: 150.0,
                         child: Image.asset("assets/logo_zip.jpg",
                             fit: BoxFit.contain)),
                     const SizedBox(height: 30.0),
                     // const Divider(),
                     Text("Escola Zip Cursos Profissionalizantes",
-                        style: Fonts.h1b),
+                        style: Fonts.h4b),
                     const SizedBox(height: 15.0),
-                    Text("Mirante do Paranapanema/SP", style: Fonts.h2),
+                    Text("Mirante do Paranapanema/SP", style: Fonts.h5),
                     Text("Rua Sebastião Farias da Costa, 1342 - Centro",
-                        style: Fonts.h4),
-                    Text("(18) 99742-7015 | @zipcursos", style: Fonts.h4),
+                        style: Fonts.h5),
+                    Text("(18) 99742-7015 | @zipcursos", style: Fonts.h5),
 
                     const SizedBox(width: 400, child: Divider(height: 30)),
-                    Text("Presidente Bernades/SP", style: Fonts.h2),
+                    Text("Presidente Bernades/SP", style: Fonts.h4),
                     Text("Rua Sebastião Farias da Costa, 1342 - Centro",
-                        style: Fonts.h4),
-                    Text("(18) 99742-7015 | @zipcursospb", style: Fonts.h4),
+                        style: Fonts.h5),
+                    Text("(18) 99742-7015 | @zipcursospb", style: Fonts.h5),
                     const SizedBox(height: 30.0),
 
                     SizedBox(
@@ -60,17 +60,15 @@ class _LoginPageState extends State<LoginPage> {
                       child: buttonGerator(
                           onClickFuncion: () async {
                             // logar
-                            User? user =
-                                await Authentication.signInWithGoogle(
-                                    context: context);
+                            User? user = await Authentication.signInWithGoogle(
+                                context: context);
                             // verifica se logou
                             if (user != null) {
                               // se existe o usuario envia o usuario para a Home
                               if (await StudentController()
                                   .checkIfUserExist(user)) {
-                                StudentModel student =
-                                    await StudentController()
-                                        .getStudentAsModel(user);
+                                StudentModel student = await StudentController()
+                                    .getStudentAsModel(user);
 
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(

@@ -4,6 +4,7 @@ class StudentModel {
   String email;
   String photo;
   String barcode;
+  int points;
 
   StudentModel({
     this.name = '',
@@ -11,5 +12,6 @@ class StudentModel {
     this.email = '',
     this.photo = '',
     this.barcode = '',
+    this.points = 0,
   });
 }

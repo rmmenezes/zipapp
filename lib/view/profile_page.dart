@@ -1,4 +1,5 @@
-import 'dart:html';
+import 'dart:io';
+
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
@@ -21,7 +22,8 @@ class _ProfilePageState extends State<ProfilePage> {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg";
 
   TextEditingController nameController = TextEditingController();
-  late File file;
+  final imagePicker = ImagePicker();
+  late File imageFile;
 
   @override
   void initState() {
@@ -51,8 +53,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             InkWell(
                                 child: const Text("Câmera"),
                                 onTap: () async {
-                                  File? f = (await ImagePicker().pickImage(
-                                      source: ImageSource.camera)) as File?;
+                                  var f = (await ImagePicker()
+                                      .pickImage(source: ImageSource.camera));
+                                  File ff = File(f!.path);
+                                  print(ff);
+                                  setState(() {
+                                    photo = ff.path;
+                                  });
+
+                                  StudentController().uploadProfilePicure(
+                                      widget.student.uid, ff);
+
                                   Navigator.pop(context);
                                 }),
                             InkWell(
@@ -69,8 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 170.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(widget.student.photo)),
+                    fit: BoxFit.cover, image: NetworkImage(photo)),
                 borderRadius: const BorderRadius.all(Radius.circular(100.0)),
               ),
             ),
@@ -121,6 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 20),
           editable == true
               ? buttonGerator(
+                  backgroundColor: Colors.orange.shade200,
                   text: "Salvar Edição",
                   onClickFuncion: () async {
                     try {

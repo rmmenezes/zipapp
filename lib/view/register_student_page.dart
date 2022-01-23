@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/view/home_page.dart';
@@ -68,8 +69,9 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             ),
             const SizedBox(height: 40),
             TextFormField(
+              inputFormatters: [LengthLimitingTextInputFormatter(100)],
               controller: nameController,
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.name,
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                   labelText: 'Nome Completo:',
@@ -77,16 +79,18 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             ),
             const SizedBox(height: 20),
             TextFormField(
+              inputFormatters: [LengthLimitingTextInputFormatter(100)],
               controller: emailController,
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                   labelText: 'Email:', icon: Icon(Icons.email)),
             ),
             const SizedBox(height: 20),
             TextFormField(
+              inputFormatters: [LengthLimitingTextInputFormatter(4)],
               controller: barcodeController,
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                   labelText: 'Número:', icon: Icon(Icons.format_list_numbered)),

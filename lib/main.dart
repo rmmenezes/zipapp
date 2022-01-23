@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zipcursos_app/models/student.dart';
-import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:zipcursos_app/view/profile_page.dart';
-import 'package:zipcursos_app/view/ranking_page.dart';
-import 'package:zipcursos_app/view/register_student_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,12 +25,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StudentModel student = StudentModel(
-        name: "Rafael Menezes Barboza",
-        email: "ra29fa@gmail.com",
-        photo:
-            "https://e7.pngegg.com/pngimages/498/300/png-clipart-hackers-security-hacker-wifi-password-hacker-prank-android-computer-icons-android-computer-network-internet-thumbnail.png",
-        barcode: "1234");
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Zip Cursos',
