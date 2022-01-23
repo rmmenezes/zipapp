@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/view/widgets/menus/customAppBar.dart';
 import 'package:zipcursos_app/view/widgets/menus/mydrawer.dart';
-
 import 'package:zipcursos_app/view/widgets/studentCard.dart';
 
 class HomePage extends StatefulWidget {
