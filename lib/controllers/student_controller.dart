@@ -7,6 +7,20 @@ import 'package:image_picker/image_picker.dart';
 import 'package:zipcursos_app/models/student.dart';
 
 class StudentController {
+  Future<PickedFile?> selectInputImage(String input) async {
+    ImageSource source;
+    if (input == "camera") {
+      source = ImageSource.camera;
+    } else {
+      source = ImageSource.gallery;
+    }
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      imageQuality: 50,
+      source: source,
+    );
+    return pickedFile;
+  }
+
   Future<String> uploadProfilePicure(String uid, PickedFile pickedFile) async {
     String uploadedPhotoUrl = '';
     if (kIsWeb) {

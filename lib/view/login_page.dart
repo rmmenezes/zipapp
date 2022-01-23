@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text("Escola Zip Cursos Profissionalizantes",
                         style: Fonts.h4b),
                     const SizedBox(height: 15.0),
-                    Text("Mirante do Paranapanema/SP", style: Fonts.h5),
+                    Text("Mirante do Paranapanema/SP", style: Fonts.h4),
                     Text("Rua Sebastião Farias da Costa, 1342 - Centro",
                         style: Fonts.h5),
                     Text("(18) 99742-7015 | @zipcursos", style: Fonts.h5),

@@ -56,9 +56,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: const Text("Câmera"),
                                   onTap: () async {
                                     PickedFile? pickedFile =
-                                        await ImagePicker().getImage(
-                                      source: ImageSource.camera,
-                                    );
+                                        await StudentController()
+                                            .selectInputImage("camera");
                                     setState(() {
                                       photo = pickedFile!.path;
                                       photoChanged = pickedFile;
@@ -69,9 +68,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: const Text("Galeria"),
                                   onTap: () async {
                                     PickedFile? pickedFile =
-                                        await ImagePicker().getImage(
-                                      source: ImageSource.gallery,
-                                    );
+                                        await StudentController()
+                                            .selectInputImage("gallery");
                                     setState(() {
                                       photo = pickedFile!.path;
                                       photoChanged = pickedFile;
