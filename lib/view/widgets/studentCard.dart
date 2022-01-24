@@ -11,7 +11,7 @@ class StudentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+      padding: const EdgeInsets.fromLTRB(30, 25, 30, 25),
       child: Card(
         elevation: 10,
         color: Colors.white,
@@ -27,12 +27,11 @@ class StudentCard extends StatelessWidget {
                 image: AssetImage("assets/logo_zip.jpg"),
                 height: 100,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
               Image.network(student.photo,
-                  fit: BoxFit.cover, height: 200.0, width: 200.0),
+                  fit: BoxFit.cover, height: 220.0, width: 220.0),
               const SizedBox(height: 10),
               Text(student.name, style: Fonts.h1b),
-              const SizedBox(height: 15),
               BarCode(barcodeData: student.barcode)
             ]),
       ),

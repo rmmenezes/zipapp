@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/fonts.dart';
+import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/profile_page.dart';
 import '../../ranking_page.dart';
 import '../../set_grade_1.dart';
@@ -41,6 +43,18 @@ class MyDrawer extends StatelessWidget {
                       ]),
                     ),
                   ]))),
+          ListTile(
+            leading: const Icon(Icons.dashboard_rounded),
+            title: const Text('Home'),
+            onTap: () async {
+              StudentModel studentModel =
+                  await StudentController().getStudentAsModel(student.uid);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(student: studentModel)));
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.dashboard_rounded),
             title: const Text('Perfil'),

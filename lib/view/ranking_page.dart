@@ -40,8 +40,6 @@ class _RankingPageState extends State<RankingPage> {
             Text("Ranking de Alunos Nota 10", style: Fonts.h1b),
             Text("Escola Zip Cursos Profissionalizantes", style: Fonts.h3),
             const SizedBox(height: 10.0),
-            Image.network("/assets/nota_10.png", fit: BoxFit.fill),
-            const SizedBox(height: 10.0),
             const Divider(),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
