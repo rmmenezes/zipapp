@@ -3,7 +3,6 @@ import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/widgets/barcode.dart';
 
-
 class StudentCard extends StatelessWidget {
   final StudentModel student;
 
@@ -34,7 +33,6 @@ class StudentCard extends StatelessWidget {
               const SizedBox(height: 10),
               Text(student.name, style: Fonts.h1b),
               const SizedBox(height: 15),
-     
               BarCode(barcodeData: student.barcode)
             ]),
       ),
@@ -76,8 +74,8 @@ class StudentCardRow extends StatelessWidget {
                 : const SizedBox(),
             const SizedBox(width: 10),
             Container(
-                width: 80.0,
-                height: 80.0,
+                width: 70.0,
+                height: 70.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(student.photo)),
@@ -86,8 +84,9 @@ class StudentCardRow extends StatelessWidget {
                 )),
             VerticalDivider(color: colorPodium),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(student.name, style: Fonts.h2b),
-              Text("Pontos: " + student.barcode, style: Fonts.h4),
+              Text(student.name, style: Fonts.h3b),
+              Text("Número: " + student.barcode.toString(), style: Fonts.h4),
+              Text("Pontos: " + student.points.toString(), style: Fonts.h4),
             ]),
           ]),
         ),

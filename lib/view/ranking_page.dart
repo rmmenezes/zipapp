@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/colors.dart';
 import 'package:zipcursos_app/util/fonts.dart';
@@ -15,50 +16,13 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  List<StudentModel> items = [
-    StudentModel(
-        name: "Rafael Menezes",
-        photo:
-            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
-        email: "ra29fa@gmail.com",
-        barcode: "1010"),
-    StudentModel(
-        name: "Rafael Menezes",
-        photo:
-            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
-        email: "ra29fa@gmail.com",
-        barcode: "1010"),
-    StudentModel(
-        name: "Rafael Menezes",
-        photo:
-            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
-        email: "ra29fa@gmail.com",
-        barcode: "1010"),
-    StudentModel(
-        name: "Rafael Menezes",
-        photo:
-            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
-        email: "ra29fa@gmail.com",
-        barcode: "1010"),
-    StudentModel(
-        name: "Rafael Menezes",
-        photo:
-            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
-        email: "ra29fa@gmail.com",
-        barcode: "1010"),
-    StudentModel(
-        name: "Rafael Menezes",
-        photo:
-            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
-        email: "ra29fa@gmail.com",
-        barcode: "1010"),
-    StudentModel(
-        name: "Rafael Menezes",
-        photo:
-            "https://livecoins.com.br/wp-content/uploads/2021/09/Bitcoin-100k.jpg",
-        email: "ra29fa@gmail.com",
-        barcode: "1010"),
-  ];
+  var studentsSortedByPoints =
+      StudentController().getAllStudentsOrdenByPoints();
+
+  @override
+  initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +69,7 @@ class _RankingPageState extends State<RankingPage> {
                           shape: BoxShape.rectangle)),
                 ]),
             const Divider(),
-            ListStudentsRankingCardsRow(items: items),
+            ListStudentsRankingCardsRow(items: studentsSortedByPoints),
           ],
         ),
       ),

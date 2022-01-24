@@ -6,7 +6,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 // ignore: must_be_immutable
 class ListStudentsRankingCardsRow extends StatefulWidget {
-  List<StudentModel> items = [];
+  Future<List<StudentModel>> items;
   ListStudentsRankingCardsRow({Key? key, required this.items})
       : super(key: key);
 
@@ -31,7 +31,7 @@ class _ListStudentsRankingCardsRowState
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = widget.items;
+      final newItems = await widget.items;
       final isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems);

@@ -114,4 +114,27 @@ class StudentController {
     });
     return res;
   }
+
+  Future<List<StudentModel>> getAllStudents() async {
+    List<StudentModel> listStudents = [];
+    var collectionRef = FirebaseFirestore.instance.collection('students');
+    final allStudents = await collectionRef.get();
+    for (int i = 0; i < allStudents.docs.length; i++) {
+      StudentModel studentTemp = StudentModel();
+      studentTemp.uid = allStudents.docs[i].data()["uid"];
+      studentTemp.name = allStudents.docs[i].data()["name"];
+      studentTemp.email = allStudents.docs[i].data()["email"];
+      studentTemp.photo = allStudents.docs[i].data()["photo"];
+      studentTemp.barcode = allStudents.docs[i].data()["barcode"];
+      studentTemp.points = allStudents.docs[i].data()["points"];
+      listStudents.add(studentTemp);
+    }
+    return listStudents;
+  }
+
+  Future<List<StudentModel>> getAllStudentsOrdenByPoints() async {
+    List<StudentModel> listStudents = await getAllStudents();
+    listStudents.sort((a, b) => b.points.compareTo(a.points));
+    return listStudents;
+  }
 }
