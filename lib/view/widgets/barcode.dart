@@ -17,7 +17,7 @@ class BarCode extends StatelessWidget {
             BarCodeImage(
               params: Code39BarCodeParams(
                 barcodeData,
-                lineWidth: 4.0,
+                lineWidth: 2.0,
                 barHeight: 80.0,
               ),
             ),

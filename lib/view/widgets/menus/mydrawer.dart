@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/fonts.dart';
+import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/profile_page.dart';
 import '../../ranking_page.dart';
 import '../../set_grade_1.dart';
@@ -51,8 +52,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          ProfilePage(student: studentAsModel)));
+                      builder: (context) => HomePage(student: studentAsModel)));
             },
           ),
           ListTile(
