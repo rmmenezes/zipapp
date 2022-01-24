@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
@@ -8,6 +7,7 @@ import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 class ProfilePage extends StatefulWidget {
   final StudentModel student;
@@ -20,6 +20,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool editable = false;
   String photo = "";
+  bool loading = false;
 
   TextEditingController nameController = TextEditingController();
   late var photoChanged;
@@ -30,6 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
     photo = widget.student.photo.toString();
     nameController.text = widget.student.name;
     photoChanged = null;
+    loading = false;
     super.initState();
   }
 
@@ -148,6 +150,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   text: "Salvar Edição",
                   onClickFuncion: () async {
                     try {
+                      Loader.show(context,
+                          progressIndicator: const LinearProgressIndicator());
+                      //default
+
                       if (photoChanged != null) {
                         await StudentController().updateStudent(
                             widget.student.uid, nameController.text);
@@ -157,17 +163,22 @@ class _ProfilePageState extends State<ProfilePage> {
                         await StudentController().updateStudent(
                             widget.student.uid, nameController.text);
                       }
+
+                      Loader.hide();
+
                       // confirma
                       await CoolAlert.show(
                           loopAnimation: false,
                           context: context,
                           type: CoolAlertType.success,
                           text: "Editado com Sucesso!!");
+                      StudentModel studentAsModel = await StudentController()
+                          .getStudentAsModel(widget.student.uid);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  HomePage(student: widget.student)));
+                                  HomePage(student: studentAsModel)));
                     } on Exception {
                       // erro
                       await CoolAlert.show(

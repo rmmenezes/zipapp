@@ -80,22 +80,19 @@ class StudentController {
     }
   }
 
-  Future<StudentModel> getStudentAsModel(User user) async {
+  Future<StudentModel> getStudentAsModel(String uid) async {
     StudentModel student = StudentModel();
-    try {
-      var collectionRef = FirebaseFirestore.instance.collection('students');
-      await collectionRef.doc(user.uid).get().then((value) {
-        student.uid = value.data()!["uid"];
-        student.name = value.data()!["name"];
-        student.email = value.data()!["email"];
-        student.photo = value.data()!["photo"];
-        student.barcode = value.data()!["barcode"];
-        student.points = value.data()!["points"];
-      });
-      return student;
-    } on Exception {
-      return student;
-    }
+
+    var collectionRef = FirebaseFirestore.instance.collection('students');
+    await collectionRef.doc(uid).get().then((value) {
+      student.uid = value.data()!["uid"];
+      student.name = value.data()!["name"];
+      student.email = value.data()!["email"];
+      student.photo = value.data()!["photo"];
+      student.barcode = value.data()!["barcode"];
+      student.points = value.data()!["points"];
+    });
+    return student;
   }
 
   Future<bool> addPointStudent(String barcode) async {

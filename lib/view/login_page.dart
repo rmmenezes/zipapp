@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:zipcursos_app/controllers/auth.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
@@ -59,16 +60,21 @@ class _LoginPageState extends State<LoginPage> {
                       width: 400,
                       child: buttonGerator(
                           onClickFuncion: () async {
+                            Loader.show(context,
+                                progressIndicator:
+                                    const LinearProgressIndicator());
+
                             // logar
                             User? user = await Authentication.signInWithGoogle(
                                 context: context);
+                            Loader.hide();
                             // verifica se logou
                             if (user != null) {
                               // se existe o usuario envia o usuario para a Home
                               if (await StudentController()
                                   .checkIfUserExist(user)) {
                                 StudentModel student = await StudentController()
-                                    .getStudentAsModel(user);
+                                    .getStudentAsModel(user.uid);
 
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
