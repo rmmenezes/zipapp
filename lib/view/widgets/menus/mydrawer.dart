@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/profile_page.dart';
@@ -41,6 +42,19 @@ class MyDrawer extends StatelessWidget {
                       ]),
                     ),
                   ]))),
+          ListTile(
+            leading: const Icon(Icons.dashboard_rounded),
+            title: const Text('Home'),
+            onTap: () async {
+              StudentModel studentAsModel =
+                  await StudentController().getStudentAsModel(student.uid);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProfilePage(student: studentAsModel)));
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.dashboard_rounded),
             title: const Text('Perfil'),

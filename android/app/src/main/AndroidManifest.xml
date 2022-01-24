@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="zipcursos.zipcursos.zipcursos_app">
    <application
-        android:label="zipcursos_app"
+        android:label="Zip Cursos"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
