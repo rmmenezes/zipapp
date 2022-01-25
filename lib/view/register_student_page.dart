@@ -97,11 +97,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(photo)),
-                  boxShadow: [
-                    editable == true
-                        ? const BoxShadow(color: Colors.orange, spreadRadius: 4)
-                        : const BoxShadow(
-                            color: Colors.orange, spreadRadius: 0),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.orange, spreadRadius: 4),
                   ],
                   borderRadius: const BorderRadius.all(Radius.circular(100.0)),
                 ),
