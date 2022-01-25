@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "zipapp-7953c",
     "zipapp": "zipapp-7953c"
   },
   "targets": {}
