@@ -9,11 +9,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: flutter pub get
-      - run: flutter build web --no-sound-null-safety --web-renderer html
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: actions/setup-java@v1
         with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'dev'
+      - name: 'Run flutter pub get'
+        run: flutter pub get
+      - name: Enable flutter web
+        run: flutter config --enable-web
+      - name: 'Build Web App'
+        run: flutter build web --no-sound-null-safety --web-renderer html
+      - name: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          github_token: ${{ secrets.TOKEN }}
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZIPAPP_7953C }}'
           channelId: live
           projectId: zipapp-7953c
+          publish_dir: ./web
+ 
