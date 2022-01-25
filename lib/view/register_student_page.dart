@@ -163,10 +163,13 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                         type: CoolAlertType.success,
                         text: "Registrado com Sucesso!!");
                     // go home page
+                    StudentModel studentAsModel = await StudentController()
+                        .getStudentAsModel(student.uid);
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomePage(student: student)));
+                            builder: (context) =>
+                                HomePage(student: studentAsModel)));
                   } on Exception {
                     await CoolAlert.show(
                         loopAnimation: false,
