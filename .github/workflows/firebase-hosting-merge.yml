@@ -2,6 +2,11 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on merge
+env :
+  GITHUB_TOKEN : $ {{ secrets.GITHUB_TOKEN }} 
+  INPUT_REPOSITORY : ${{ github.repository }} 
+  INPUT_BASE : ${{ github.base_ref }} 
+  INPUT_HEAD : ${{ github.ref }}
 'on':
   push:
     branches:
