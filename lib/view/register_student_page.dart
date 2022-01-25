@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/view/home_page.dart';
@@ -26,6 +27,7 @@ class RegisterStudentPage extends StatefulWidget {
 }
 
 class _RegisterStudentPageState extends State<RegisterStudentPage> {
+  late var photoChanged;
   bool isConfirmPasswordVisible = false;
   String photo =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg";
@@ -56,14 +58,52 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
           padding: const EdgeInsets.all(25.0),
           child: Column(children: [
             InkWell(
+              onTap: () async {
+                await showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                            content: const Text("Escolha a fonte da imagem"),
+                            actions: [
+                              InkWell(
+                                  child: const Text("Câmera"),
+                                  onTap: () async {
+                                    PickedFile? pickedFile =
+                                        await StudentController()
+                                            .selectInputImage("camera");
+                                    setState(() {
+                                      photo = pickedFile!.path;
+                                      photoChanged = pickedFile;
+                                    });
+                                    Navigator.pop(context);
+                                  }),
+                              InkWell(
+                                  child: const Text("Galeria"),
+                                  onTap: () async {
+                                    PickedFile? pickedFile =
+                                        await StudentController()
+                                            .selectInputImage("gallery");
+                                    setState(() {
+                                      photo = pickedFile!.path;
+                                      photoChanged = pickedFile;
+                                    });
+                                    Navigator.pop(context);
+                                  }),
+                            ]));
+              },
               child: Container(
-                width: 150.0,
-                height: 150.0,
+                padding: const EdgeInsets.all(20.0),
+                width: 170.0,
+                height: 170.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(photo)),
+                  boxShadow: [
+                    editable == true
+                        ? const BoxShadow(color: Colors.orange, spreadRadius: 4)
+                        : const BoxShadow(
+                            color: Colors.orange, spreadRadius: 0),
+                  ],
                   borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-                  color: Colors.redAccent,
                 ),
               ),
             ),
@@ -101,13 +141,24 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                 onClickFuncion: () async {
                   try {
                     // registra
-                    StudentModel student = await StudentController()
-                        .registerStudent(
-                            widget.uid.toString(),
-                            nameController.text,
-                            emailController.text,
-                            photo,
-                            barcodeController.text);
+                    StudentModel student;
+                    if (photoChanged != null) {
+                      student = await StudentController().registerStudent(
+                          widget.uid.toString(),
+                          nameController.text,
+                          emailController.text,
+                          "",
+                          barcodeController.text);
+                      await StudentController()
+                          .uploadProfilePicure(student.uid, photoChanged);
+                    } else {
+                      student = await StudentController().registerStudent(
+                          widget.uid.toString(),
+                          nameController.text,
+                          emailController.text,
+                          photo,
+                          barcodeController.text);
+                    }
                     // confirma
                     await CoolAlert.show(
                         loopAnimation: false,
