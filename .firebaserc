@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "rmba-8c14e"
-  }
+    "default": "zipapp-7953c",
+    "zipapp": "zipapp-7953c"
+  },
+  "targets": {}
 }

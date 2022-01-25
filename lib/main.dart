@@ -7,13 +7,13 @@ Future<void> main() async {
   if (Firebase.apps.isEmpty) {
     Firebase.initializeApp(
         options: const FirebaseOptions(
-            apiKey: "AIzaSyAUWSxDSGaxL57M4mlMm681dWI6A-qb3K4",
-            authDomain: "rmba-8c14e.firebaseapp.com",
-            projectId: "rmba-8c14e",
-            storageBucket: "rmba-8c14e.appspot.com",
-            messagingSenderId: "903308750260",
-            appId: "1:903308750260:web:9de3eca7abff75f95d16e1",
-            measurementId: "G-DJ823X2XTD"));
+            apiKey: "AIzaSyDoWsYndGj8N7Jm1JGTkbNyj0GFBkmitU4",
+            authDomain: "zipapp-7953c.firebaseapp.com",
+            projectId: "zipapp-7953c",
+            storageBucket: "zipapp-7953c.appspot.com",
+            messagingSenderId: "1039712499767",
+            appId: "1:1039712499767:web:c39b7e0da91ea64cd1a7b2",
+            measurementId: "G-1V7PEYN6DJ"));
   } else {
     Firebase.app(); // if already initialized, use that one
   }
