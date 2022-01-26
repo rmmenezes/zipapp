@@ -75,16 +75,18 @@ class MyDrawer extends StatelessWidget {
                       builder: (context) => RankingPage(student: student)))
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.dashboard_rounded),
-            title: const Text("Marcar Nota 10"),
-            onTap: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SetGrade10Page()))
-            },
-          ),
+          student.level == "admin"
+              ? ListTile(
+                  leading: const Icon(Icons.dashboard_rounded),
+                  title: const Text("Marcar Nota 10"),
+                  onTap: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SetGrade10Page()))
+                  },
+                )
+              : const SizedBox(),
         ],
       ),
     );

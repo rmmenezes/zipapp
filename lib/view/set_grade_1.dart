@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'package:cool_alert/cool_alert.dart';
@@ -37,8 +38,11 @@ class _SetGrade10PageState extends State<SetGrade10Page> {
           buttonGerator(
             backgroundColor: Colors.orange.shade200,
             onClickFuncion: () async {
+              Loader.show(context,
+                  progressIndicator: const LinearProgressIndicator());
               bool a = await StudentController()
                   .addPointStudent(barcodeController.text);
+              Loader.hide();
               if (a) {
                 await CoolAlert.show(
                     loopAnimation: false,

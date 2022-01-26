@@ -57,13 +57,19 @@ class StudentController {
   Future<StudentModel> registerStudent(String uid, String name, String email,
       String photo, String barcode) async {
     StudentModel student = StudentModel(
-        uid: uid, name: name, email: email, photo: photo, barcode: barcode);
+        uid: uid,
+        name: name,
+        email: email,
+        photo: photo,
+        level: "student",
+        barcode: barcode);
     await FirebaseFirestore.instance.collection('students').doc(uid).set({
       'uid': student.uid,
       'name': student.name,
       'email': student.email,
       'photo': student.photo,
       'barcode': student.barcode,
+      'level': student.level,
       'points': 0,
     });
     return student;
@@ -90,6 +96,7 @@ class StudentController {
       student.email = value.data()!["email"];
       student.photo = value.data()!["photo"];
       student.barcode = value.data()!["barcode"];
+      student.level = value.data()!["level"];
       student.points = value.data()!["points"];
     });
     return student;
@@ -126,6 +133,7 @@ class StudentController {
       studentTemp.email = allStudents.docs[i].data()["email"];
       studentTemp.photo = allStudents.docs[i].data()["photo"];
       studentTemp.barcode = allStudents.docs[i].data()["barcode"];
+      studentTemp.level = allStudents.docs[i].data()["level"];
       studentTemp.points = allStudents.docs[i].data()["points"];
       listStudents.add(studentTemp);
     }
