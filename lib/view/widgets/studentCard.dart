@@ -23,6 +23,7 @@ class StudentCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(height: 10),
               const Image(
                 image: AssetImage("assets/logo_zip.jpg"),
                 height: 100,

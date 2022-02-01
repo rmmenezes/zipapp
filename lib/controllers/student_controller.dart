@@ -60,10 +60,11 @@ class StudentController {
         uid: uid,
         name: name,
         email: email,
-        photo: photo,
+        photo: photo.replaceAll('=s96-c', '=s400-c'),
         level: "student",
         barcode: barcode,
         schoolLocation: schoolLocation);
+
     await FirebaseFirestore.instance.collection('students').doc(uid).set({
       'uid': student.uid,
       'name': student.name,

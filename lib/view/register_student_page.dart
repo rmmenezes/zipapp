@@ -106,7 +106,9 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                     height: 170.0,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          fit: BoxFit.cover, image: NetworkImage(photo)),
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                              photo.replaceAll('=s96-c', '=s400-c'))),
                       boxShadow: const [
                         BoxShadow(color: Colors.orange, spreadRadius: 4),
                       ],

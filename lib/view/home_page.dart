@@ -22,9 +22,14 @@ class _HomePageState extends State<HomePage> {
         ],
         appBar: MyAppBar(title: "Página Inicial"),
         drawer: MyDrawer(student: widget.student),
-        body: Container(
-          color: Colors.blueGrey[50],
-          child: StudentCard(student: widget.student),
+        body: Center(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.blueGrey[50],
+            child: SingleChildScrollView(
+                child: StudentCard(student: widget.student)),
+          ),
         ));
   }
 }
