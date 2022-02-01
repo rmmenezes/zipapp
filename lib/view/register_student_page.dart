@@ -174,7 +174,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                   hint: const Text('Selecione a cidade da sua escola'),
                   items: <String>[
                     'Mirante do Paranapanema',
-                    'Presidente Bernades'
+                    'Presidente Bernardes'
                   ].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
