@@ -51,9 +51,8 @@ class _LoginPageState extends State<LoginPage> {
 
                     const SizedBox(width: 400, child: Divider(height: 30)),
                     Text("Presidente Bernades/SP", style: Fonts.h4),
-                    Text(
-                        "Rua Benedito de Oliveira, 165 - Shopping Bernardense - Sala 06",
-                        style: Fonts.h5),
+                    Text("Rua Benedito de Oliveira, 165 -", style: Fonts.h5),
+                    Text("Shopping Bernardense - Sala 06", style: Fonts.h5),
                     Text("(18) 99730-7555 | @zipcursospb", style: Fonts.h5),
                     const SizedBox(height: 30.0),
 

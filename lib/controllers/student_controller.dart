@@ -15,7 +15,7 @@ class StudentController {
       source = ImageSource.gallery;
     }
     PickedFile? pickedFile = await ImagePicker().getImage(
-      imageQuality: 50,
+      imageQuality: 70,
       source: source,
     );
     return pickedFile;
@@ -55,14 +55,15 @@ class StudentController {
   }
 
   Future<StudentModel> registerStudent(String uid, String name, String email,
-      String photo, String barcode) async {
+      String photo, String barcode, String schoolLocation) async {
     StudentModel student = StudentModel(
         uid: uid,
         name: name,
         email: email,
         photo: photo,
         level: "student",
-        barcode: barcode);
+        barcode: barcode,
+        schoolLocation: schoolLocation);
     await FirebaseFirestore.instance.collection('students').doc(uid).set({
       'uid': student.uid,
       'name': student.name,
@@ -71,6 +72,7 @@ class StudentController {
       'barcode': student.barcode,
       'level': student.level,
       'points': 0,
+      'schoolLocation': student.schoolLocation
     });
     return student;
   }
@@ -98,6 +100,7 @@ class StudentController {
       student.barcode = value.data()!["barcode"];
       student.level = value.data()!["level"];
       student.points = value.data()!["points"];
+      student.schoolLocation = value.data()!["schoolLocation"];
     });
     return student;
   }
@@ -122,7 +125,7 @@ class StudentController {
     return res;
   }
 
-  Future<List<StudentModel>> getAllStudents() async {
+  Future<List<StudentModel>> getAllStudents(String schoolLocation) async {
     List<StudentModel> listStudents = [];
     var collectionRef = FirebaseFirestore.instance.collection('students');
     final allStudents = await collectionRef.get();
@@ -135,13 +138,21 @@ class StudentController {
       studentTemp.barcode = allStudents.docs[i].data()["barcode"];
       studentTemp.level = allStudents.docs[i].data()["level"];
       studentTemp.points = allStudents.docs[i].data()["points"];
-      listStudents.add(studentTemp);
+      studentTemp.schoolLocation = allStudents.docs[i].data()["schoolLocation"];
+      if (schoolLocation != "all") {
+        if (studentTemp.schoolLocation == schoolLocation) {
+          listStudents.add(studentTemp);
+        }
+      } else {
+        listStudents.add(studentTemp);
+      }
     }
     return listStudents;
   }
 
-  Future<List<StudentModel>> getAllStudentsOrdenByPoints() async {
-    List<StudentModel> listStudents = await getAllStudents();
+  Future<List<StudentModel>> getAllStudentsOrdenByPoints(
+      String schoolLocation) async {
+    List<StudentModel> listStudents = await getAllStudents(schoolLocation);
     listStudents.sort((a, b) => b.points.compareTo(a.points));
     return listStudents;
   }

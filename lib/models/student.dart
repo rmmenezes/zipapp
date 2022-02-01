@@ -5,6 +5,7 @@ class StudentModel {
   String photo;
   String barcode;
   String level;
+  String schoolLocation;
   int points;
 
   StudentModel({
@@ -14,6 +15,7 @@ class StudentModel {
     this.photo = '',
     this.barcode = '',
     this.level = '',
+    this.schoolLocation = '',
     this.points = 0,
   });
 }

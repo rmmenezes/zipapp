@@ -16,12 +16,13 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  var studentsSortedByPoints =
-      StudentController().getAllStudentsOrdenByPoints();
+  late Future<List<StudentModel>> studentsSortedByPoints;
 
   @override
   initState() {
     super.initState();
+    studentsSortedByPoints = StudentController()
+        .getAllStudentsOrdenByPoints(widget.student.schoolLocation);
   }
 
   @override

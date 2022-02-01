@@ -157,6 +157,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     icon: Icon(Icons.format_list_numbered)),
               ),
               const SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                  value: widget.student.schoolLocation,
+                  decoration: const InputDecoration(
+                      labelText: 'Localização da Unidade:',
+                      icon: Icon(Icons.location_on)),
+                  items: <String>[widget.student.schoolLocation.toString()]
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: null),
+              const SizedBox(height: 20),
               editable == true
                   ? buttonGerator(
                       backgroundColor: Colors.orange.shade200,

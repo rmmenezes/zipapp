@@ -37,6 +37,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController barcodeController = TextEditingController();
+  TextEditingController schoolLocationController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -160,6 +161,33 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                       icon: Icon(Icons.format_list_numbered)),
                 ),
                 const SizedBox(height: 20),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                      labelText: 'Localização da Unidade:',
+                      icon: Icon(Icons.location_on)),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Preencha com o local da sua escola';
+                    }
+                    return null;
+                  },
+                  hint: const Text('Selecione a cidade da sua escola'),
+                  items: <String>[
+                    'Mirante do Paranapanema',
+                    'Presidente Bernades'
+                  ].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      schoolLocationController.text = value!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
                 buttonGerator(
                     text: "Confirmar Cadastro",
                     onClickFuncion: () async {
@@ -176,7 +204,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                                 nameController.text,
                                 emailController.text,
                                 "",
-                                barcodeController.text);
+                                barcodeController.text,
+                                schoolLocationController.text);
                             await StudentController()
                                 .uploadProfilePicure(student.uid, photoChanged);
                           } else {
@@ -185,7 +214,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                                 nameController.text,
                                 emailController.text,
                                 photo,
-                                barcodeController.text);
+                                barcodeController.text,
+                                schoolLocationController.text);
                           }
 
                           Loader.hide();
