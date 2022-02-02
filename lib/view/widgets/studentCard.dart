@@ -25,14 +25,13 @@ class StudentCard extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               const Image(
-                image: AssetImage("assets/logo_zip.jpg"),
-                height: 100,
-              ),
+                  image: AssetImage("assets/logo_zip.jpg"), height: 100),
               const SizedBox(height: 20),
               Image.network(student.photo,
                   fit: BoxFit.cover, height: 220.0, width: 220.0),
               const SizedBox(height: 10),
-              Text(student.name, style: Fonts.h1b),
+              Text(student.name,
+                  overflow: TextOverflow.ellipsis, style: Fonts.h3b),
               BarCode(barcodeData: student.barcode)
             ]),
       ),
@@ -83,11 +82,18 @@ class StudentCardRow extends StatelessWidget {
                   color: Colors.orange,
                 )),
             VerticalDivider(color: colorPodium),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(student.name, style: Fonts.h3b),
-              Text("Número: " + student.barcode.toString(), style: Fonts.h4),
-              Text("Pontos: " + student.points.toString(), style: Fonts.h4),
-            ]),
+            Flexible(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(student.name,
+                        overflow: TextOverflow.ellipsis, style: Fonts.h3b),
+                    Text("Número: " + student.barcode.toString(),
+                        overflow: TextOverflow.ellipsis, style: Fonts.h4),
+                    Text("Pontos: " + student.points.toString(),
+                        overflow: TextOverflow.ellipsis, style: Fonts.h4),
+                  ]),
+            ),
           ]),
         ),
       ),
