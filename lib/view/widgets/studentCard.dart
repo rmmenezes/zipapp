@@ -80,7 +80,7 @@ class StudentCardRow extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(student.photo)),
                   borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-                  color: Colors.redAccent,
+                  color: Colors.orange,
                 )),
             VerticalDivider(color: colorPodium),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

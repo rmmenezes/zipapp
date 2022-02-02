@@ -7,6 +7,7 @@ import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -89,8 +90,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: 170.0,
                   height: 170.0,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover, image: NetworkImage(photo)),
+                    image: photoChanged != null && kIsWeb == false
+                        ? DecorationImage(
+                            fit: BoxFit.cover, image: FileImage(File(photo)))
+                        : DecorationImage(
+                            fit: BoxFit.cover, image: NetworkImage(photo)),
                     boxShadow: [
                       editable == true
                           ? const BoxShadow(

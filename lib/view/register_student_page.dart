@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
+
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class RegisterStudentPage extends StatefulWidget {
   String? nome;
@@ -105,12 +107,15 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                     width: 170.0,
                     height: 170.0,
                     decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              photo.replaceAll('=s96-c', '=s400-c'))),
+                      image: photoChanged != null && kIsWeb == false
+                          ? DecorationImage(
+                              fit: BoxFit.cover, image: FileImage(File(photo)))
+                          : DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  photo.replaceAll('=s96-c', '=s400-c'))),
                       boxShadow: const [
-                        BoxShadow(color: Colors.orange, spreadRadius: 4),
+                        BoxShadow(color: Colors.orange, spreadRadius: 4)
                       ],
                       borderRadius:
                           const BorderRadius.all(Radius.circular(100.0)),

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:zipcursos_app/models/student.dart';
 
@@ -15,7 +14,7 @@ class StudentController {
       source = ImageSource.gallery;
     }
     PickedFile? pickedFile = await ImagePicker().getImage(
-      imageQuality: 70,
+      imageQuality: 35,
       source: source,
     );
     return pickedFile;
@@ -23,21 +22,21 @@ class StudentController {
 
   Future<String> uploadProfilePicure(String uid, PickedFile pickedFile) async {
     String uploadedPhotoUrl = '';
-    if (kIsWeb) {
-      Reference _reference =
-          FirebaseStorage.instance.ref().child("students/photos/" + uid);
-      await _reference
-          .putData(
-        await pickedFile.readAsBytes(),
-        SettableMetadata(contentType: 'image/jpeg'),
-      )
-          .whenComplete(() async {
-        await _reference.getDownloadURL().then((value) {
-          uploadedPhotoUrl = value;
-          return uploadedPhotoUrl;
-        });
+
+    Reference _reference =
+        FirebaseStorage.instance.ref().child("students/photos/" + uid);
+    await _reference
+        .putData(
+      await pickedFile.readAsBytes(),
+      SettableMetadata(contentType: 'image/jpeg'),
+    )
+        .whenComplete(() async {
+      await _reference.getDownloadURL().then((value) {
+        uploadedPhotoUrl = value;
+        return value;
       });
-    }
+    });
+
     await FirebaseFirestore.instance.collection('students').doc(uid).update({
       'photo': uploadedPhotoUrl,
     });

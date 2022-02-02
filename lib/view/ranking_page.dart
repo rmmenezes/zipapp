@@ -40,6 +40,7 @@ class _RankingPageState extends State<RankingPage> {
           children: [
             Text("Ranking de Alunos Nota 10", style: Fonts.h1b),
             Text("Escola Zip Cursos Profissionalizantes", style: Fonts.h3),
+            Text(widget.student.schoolLocation, style: Fonts.h4),
             const SizedBox(height: 10.0),
             const Divider(),
             Row(
