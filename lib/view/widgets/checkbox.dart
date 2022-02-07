@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/util/fonts.dart';
@@ -64,6 +65,24 @@ class CheckButtomCustom extends StatefulWidget {
 
 class _CheckButtomCustomState extends State<CheckButtomCustom> {
   late bool value;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  _convertDay(String day) {
+    if (day == "seg") {
+      return 2;
+    } else if (day == "ter") {
+      return 3;
+    } else if (day == "qua") {
+      return 4;
+    } else if (day == "qui") {
+      return 5;
+    } else if (day == "sex") {
+      return 6;
+    } else if (day == "sab") {
+      return 7;
+    }
+  }
+
   @override
   void initState() {
     value = widget.value == "true";
@@ -84,7 +103,11 @@ class _CheckButtomCustomState extends State<CheckButtomCustom> {
               value = newValue!;
               widget.mapValuesClassTimes[widget.title.toLowerCase()][0] =
                   newValue;
-              updateStatusCheckBox(widget.mapValuesClassTimes, widget.student);
+              updateStatusCheckBox(widget.mapValuesClassTimes, widget.student)
+                  .then((value) async {
+                await flutterLocalNotificationsPlugin
+                    .cancel(_convertDay(widget.title.toLowerCase()));
+              });
               widget.daysSelected.add(widget.title.toLowerCase());
             });
           }),
