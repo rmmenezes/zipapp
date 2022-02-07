@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:zipcursos_app/controllers/student_controller.dart';
+import 'package:zipcursos_app/models/student.dart';
+import 'package:zipcursos_app/view/home_page.dart';
+import 'package:zipcursos_app/view/register_student_page.dart';
 
 class Authentication {
   static SnackBar customSnackBar({required String content}) {
@@ -81,6 +85,27 @@ class Authentication {
       ScaffoldMessenger.of(context).showSnackBar(
         Authentication.customSnackBar(content: 'Error signing out. Try again.'),
       );
+    }
+  }
+
+  static void isUserLogged(context) async {
+    User? user = await FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      if (await StudentController().checkIfUserExist(user)) {
+        StudentModel student =
+            await StudentController().getStudentAsModel(user.uid);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => HomePage(student: student)));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RegisterStudentPage(
+                    nome: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                    uid: user.uid)));
+      }
     }
   }
 }

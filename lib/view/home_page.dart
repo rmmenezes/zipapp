@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/view/widgets/menus/customAppBar.dart';
 import 'package:zipcursos_app/view/widgets/menus/mydrawer.dart';
 import 'package:zipcursos_app/view/widgets/studentCard.dart';
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   final StudentModel student;

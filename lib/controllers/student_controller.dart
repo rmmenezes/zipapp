@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -62,7 +63,8 @@ class StudentController {
         photo: photo.replaceAll('=s96-c', '=s400-c'),
         level: "student",
         barcode: barcode,
-        schoolLocation: schoolLocation);
+        schoolLocation: schoolLocation,
+        classTimes: TimeClass());
 
     await FirebaseFirestore.instance.collection('students').doc(uid).set({
       'uid': student.uid,
@@ -72,7 +74,16 @@ class StudentController {
       'barcode': student.barcode,
       'level': student.level,
       'points': 0,
-      'schoolLocation': student.schoolLocation
+      'schoolLocation': student.schoolLocation,
+      'classTimes': {
+        "seg": {student.classTimes?.seg.isEnable, student.classTimes?.seg.time},
+        "ter": {student.classTimes?.ter.isEnable, student.classTimes?.ter.time},
+        "qua": {student.classTimes?.qua.isEnable, student.classTimes?.qua.time},
+        "qui": {student.classTimes?.qui.isEnable, student.classTimes?.qui.time},
+        "sex": {student.classTimes?.sex.isEnable, student.classTimes?.sex.time},
+        "sab": {student.classTimes?.sab.isEnable, student.classTimes?.sab.time},
+        "dom": {student.classTimes?.dom.isEnable, student.classTimes?.dom.time},
+      },
     });
     return student;
   }
@@ -93,14 +104,7 @@ class StudentController {
 
     var collectionRef = FirebaseFirestore.instance.collection('students');
     await collectionRef.doc(uid).get().then((value) {
-      student.uid = value.data()!["uid"];
-      student.name = value.data()!["name"];
-      student.email = value.data()!["email"];
-      student.photo = value.data()!["photo"];
-      student.barcode = value.data()!["barcode"];
-      student.level = value.data()!["level"];
-      student.points = value.data()!["points"];
-      student.schoolLocation = value.data()!["schoolLocation"];
+      student = StudentModel().jsonToObject(value.data());
     });
     return student;
   }
@@ -112,7 +116,7 @@ class StudentController {
         .where("barcode", isEqualTo: barcode)
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         res = element.exists;
         FirebaseFirestore.instance
             .collection('students')
@@ -120,7 +124,7 @@ class StudentController {
             .update({
           'points': element.data()["points"] + 10,
         });
-      });
+      }
     });
     return res;
   }
@@ -130,16 +134,9 @@ class StudentController {
     var collectionRef = FirebaseFirestore.instance.collection('students');
     final allStudents = await collectionRef.get();
     for (int i = 0; i < allStudents.docs.length; i++) {
-      StudentModel studentTemp = StudentModel();
-      studentTemp.uid = allStudents.docs[i].data()["uid"];
-      studentTemp.name = allStudents.docs[i].data()["name"];
-      studentTemp.email = allStudents.docs[i].data()["email"];
-      studentTemp.photo = allStudents.docs[i].data()["photo"];
-      studentTemp.barcode = allStudents.docs[i].data()["barcode"];
-      studentTemp.level = allStudents.docs[i].data()["level"];
-      studentTemp.points = allStudents.docs[i].data()["points"];
-      studentTemp.schoolLocation = allStudents.docs[i].data()["schoolLocation"];
-      if (schoolLocation != "all") {
+      StudentModel studentTemp =
+          StudentModel().jsonToObject(allStudents.docs[i].data());
+      if (studentTemp.schoolLocation != "all") {
         if (studentTemp.schoolLocation == schoolLocation) {
           listStudents.add(studentTemp);
         }
@@ -155,5 +152,48 @@ class StudentController {
     List<StudentModel> listStudents = await getAllStudents(schoolLocation);
     listStudents.sort((a, b) => b.points.compareTo(a.points));
     return listStudents;
+  }
+}
+
+Future<Map> getValuesClassTimes(StudentModel student) async {
+  Map mapClassTimes = {};
+
+  await FirebaseFirestore.instance
+      .collection('students')
+      .doc(student.uid)
+      .get()
+      .then((value) {
+    mapClassTimes = Map.from(value.data()!["classTimes"]);
+  });
+
+  return mapClassTimes;
+}
+
+Future<bool> updateStatusCheckBox(
+    Map mapClassTimes, StudentModel student) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('students')
+        .doc(student.uid)
+        .update({
+      'classTimes': mapClassTimes,
+    });
+    return true;
+  } on Exception {
+    return false;
+  }
+}
+
+Future<bool> updateClassTimes(Map mapClassTimes, StudentModel student) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('students')
+        .doc(student.uid)
+        .update({
+      'classTimes': mapClassTimes,
+    });
+    return true;
+  } on Exception {
+    return false;
   }
 }

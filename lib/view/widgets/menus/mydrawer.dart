@@ -4,6 +4,7 @@ import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/profile_page.dart';
+import '../../notify_class.dart';
 import '../../ranking_page.dart';
 import '../../set_grade_1.dart';
 
@@ -73,6 +74,16 @@ class MyDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => RankingPage(student: student)))
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.dashboard_rounded),
+            title: const Text('Lembrete'),
+            onTap: () => {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NotifyClass(student: student)))
             },
           ),
           student.level == "admin"
