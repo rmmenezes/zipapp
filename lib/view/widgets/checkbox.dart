@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
+import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/widgets/timerPicker.dart';
 
 class CheckButtonCustomListRow extends StatefulWidget {
@@ -35,10 +36,6 @@ class _CheckButtonCustomListRowState extends State<CheckButtonCustomListRow> {
               value: widget
                   .mapValuesClassTimes[widget.titles[index].toLowerCase()][0]
                   .toString());
-        })),
-        Column(
-            children: List.generate(widget.daysSelected.length, (index) {
-          return Text(widget.daysSelected[index]);
         })),
       ],
     );
@@ -76,7 +73,10 @@ class _CheckButtomCustomState extends State<CheckButtomCustom> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Text(widget.title),
+      Text(
+        widget.title,
+        style: Fonts.h5b,
+      ),
       Checkbox(
           value: value,
           onChanged: (newValue) {

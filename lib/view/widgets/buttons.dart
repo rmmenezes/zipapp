@@ -12,7 +12,7 @@ class buttonGerator extends StatelessWidget {
   const buttonGerator({
     this.text = '',
     this.fontColor = Colors.black,
-    this.fontSize = 20.0,
+    this.fontSize = 18.0,
     this.backgroundColor = Colors.orange,
     required this.onClickFuncion,
     this.iconButton,
@@ -21,8 +21,8 @@ class buttonGerator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle textStyle =
-        TextStyle(fontFamily: 'Montserrat', fontSize: 18.0);
+    TextStyle textStyle = TextStyle(
+        fontFamily: 'Montserrat', fontSize: fontSize, color: fontColor);
 
     return InkWell(
       onTap: onClickFuncion,

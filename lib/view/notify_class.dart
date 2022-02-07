@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/classDays.dart';
+import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'package:zipcursos_app/view/widgets/checkbox.dart';
 import 'package:zipcursos_app/view/widgets/menus/customAppBar.dart';
@@ -64,7 +65,8 @@ class _NotifyClass extends State<NotifyClass> {
                         child: Column(children: [
                           const Text("Minhas Aulas",
                               style: TextStyle(
-                                  fontFamily: 'Montserrat', fontSize: 23.0)),
+                                  fontFamily: 'Montserrat', fontSize: 18.0)),
+                          const SizedBox(height: 15),
                           Text(
                               "Podemos lhe avisar de suas aulas. Selecione os dias da semana e o horário desejados para enviarmos uma notificação.",
                               textAlign: TextAlign.justify,
@@ -92,7 +94,7 @@ class _NotifyClass extends State<NotifyClass> {
                                           ClassDays().classDaysAbrv.length,
                                           (index) {
                                     TimeOfDay _time = TimeOfDay.now()
-                                        .replacing(hour: 11, minute: 30);
+                                        .replacing(hour: 10, minute: 30);
 
                                     return snapshot
                                                 .data!["classTimes"][ClassDays()
@@ -102,14 +104,22 @@ class _NotifyClass extends State<NotifyClass> {
                                         ? Row(children: [
                                             Expanded(
                                               flex: 2,
-                                              child: Text(ClassDays()
-                                                  .convertDayAbrvToFull(
-                                                      ClassDays().classDaysAbrv[
-                                                          index])),
+                                              child: Text(
+                                                ClassDays()
+                                                    .convertDayAbrvToFull(
+                                                        ClassDays()
+                                                                .classDaysAbrv[
+                                                            index]),
+                                                style: Fonts.h5b,
+                                              ),
                                             ),
                                             Expanded(
                                                 flex: 3,
                                                 child: buttonGerator(
+                                                    fontColor: Colors.white,
+                                                    fontSize: 15,
+                                                    backgroundColor:
+                                                        Colors.orangeAccent,
                                                     text: snapshot
                                                         .data!["classTimes"][
                                                             ClassDays()
@@ -136,10 +146,16 @@ class _NotifyClass extends State<NotifyClass> {
                                                                       .toString()]
                                                                   [1] = _time
                                                                       .hour
-                                                                      .toString() +
+                                                                      .toString()
+                                                                      .padLeft(
+                                                                          2,
+                                                                          '0') +
                                                                   ":" +
                                                                   _time.minute
-                                                                      .toString();
+                                                                      .toString()
+                                                                      .padLeft(
+                                                                          2,
+                                                                          '0');
 
                                                               updateClassTimes(
                                                                   temp,
