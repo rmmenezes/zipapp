@@ -17,12 +17,14 @@ class RankingPage extends StatefulWidget {
 
 class _RankingPageState extends State<RankingPage> {
   late Future<List<StudentModel>> studentsSortedByPoints;
+  late String selected;
 
   @override
   initState() {
     super.initState();
-    studentsSortedByPoints = StudentController()
-        .getAllStudentsOrdenByPoints(widget.student.schoolLocation);
+    selected = "Mirante do Paranapanema";
+    studentsSortedByPoints =
+        StudentController().getAllStudentsOrdenByPoints(selected);
   }
 
   @override
@@ -42,6 +44,50 @@ class _RankingPageState extends State<RankingPage> {
             Text("Escola Zip Cursos Profissionalizantes", style: Fonts.h3),
             Text(widget.student.schoolLocation, style: Fonts.h4),
             const SizedBox(height: 10.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        selected = "Mirante do Paranapanema";
+                        studentsSortedByPoints = StudentController()
+                            .getAllStudentsOrdenByPoints(selected);
+                      });
+                    },
+                    child: const Text("Mirante"),
+                    style: ElevatedButton.styleFrom(
+                      primary: selected == "Mirante do Paranapanema"
+                          ? Colors.orange
+                          : Colors.orangeAccent,
+                      onPrimary: Colors.white,
+                    ),
+                  )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        selected = "Presidente Bernardes";
+                        studentsSortedByPoints = StudentController()
+                            .getAllStudentsOrdenByPoints(selected);
+                      });
+                    },
+                    child: const Text("Bernardes"),
+                    style: ElevatedButton.styleFrom(
+                      primary: selected == "Presidente Bernardes"
+                          ? Colors.orange
+                          : Colors.orangeAccent,
+                      onPrimary: Colors.white,
+                    ),
+                  )),
+                ],
+              ),
+            ),
             const Divider(),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +115,9 @@ class _RankingPageState extends State<RankingPage> {
                           shape: BoxShape.rectangle)),
                 ]),
             const Divider(),
-            ListStudentsRankingCardsRow(items: studentsSortedByPoints),
+            ListStudentsRankingCardsRow(
+              items: studentsSortedByPoints,
+            ),
           ],
         ),
       ),

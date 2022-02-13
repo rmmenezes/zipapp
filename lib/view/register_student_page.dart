@@ -205,8 +205,10 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                                   const LinearProgressIndicator());
                           // registra
                           StudentModel student;
+                          TimeClass tc = TimeClass();
                           if (photoChanged != null) {
                             student = await StudentController().registerStudent(
+                                tc,
                                 widget.uid.toString(),
                                 nameController.text,
                                 emailController.text,
@@ -217,6 +219,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                                 .uploadProfilePicure(student.uid, photoChanged);
                           } else {
                             student = await StudentController().registerStudent(
+                                tc,
                                 widget.uid.toString(),
                                 nameController.text,
                                 emailController.text,

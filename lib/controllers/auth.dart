@@ -8,6 +8,77 @@ import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/register_student_page.dart';
 
 class Authentication {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user;
+
+  Future<User?> registerUsingEmailPassword(
+      {required String email, required String password}) async {
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+        return null;
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+    return user;
+  }
+
+  Future<User?> signInUsingEmailPassword({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided.');
+      }
+    }
+    return user;
+  }
+
+  //SIGN UP METHOD
+  Future signUpWithEmail(
+      {required String email, required String password}) async {
+    try {
+      final UserCredential userCredential =
+          await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      user = userCredential.user;
+      return user;
+    } on FirebaseAuthException catch (e) {
+      return null;
+    }
+  }
+
+  //SIGN IN METHOD
+  Future signInWithEmail(
+      {required String email, required String password}) async {
+    try {
+      final UserCredential userCredential = await auth
+          .signInWithEmailAndPassword(email: email, password: password);
+      user = userCredential.user;
+      return user;
+    } on FirebaseAuthException catch (e) {
+      return null;
+    }
+  }
+
   static SnackBar customSnackBar({required String content}) {
     return SnackBar(
       backgroundColor: Colors.black,
@@ -18,10 +89,7 @@ class Authentication {
     );
   }
 
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-
+  Future<User?> signInWithGoogle({required BuildContext context}) async {
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
       try {
@@ -75,7 +143,7 @@ class Authentication {
     return user;
   }
 
-  static Future<void> signOut({required BuildContext context}) async {
+  Future<void> signOut({required BuildContext context}) async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     try {
@@ -88,8 +156,8 @@ class Authentication {
     }
   }
 
-  static void isUserLogged(context) async {
-    User? user = await FirebaseAuth.instance.currentUser;
+  void isUserLogged(context) async {
+    User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       if (await StudentController().checkIfUserExist(user)) {
         StudentModel student =

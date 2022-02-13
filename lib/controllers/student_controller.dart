@@ -54,8 +54,14 @@ class StudentController {
     }
   }
 
-  Future<StudentModel> registerStudent(String uid, String name, String email,
-      String photo, String barcode, String schoolLocation) async {
+  Future<StudentModel> registerStudent(
+      TimeClass classTimes,
+      String uid,
+      String name,
+      String email,
+      String photo,
+      String barcode,
+      String schoolLocation) async {
     StudentModel student = StudentModel(
         uid: uid,
         name: name,
@@ -64,8 +70,9 @@ class StudentController {
         level: "student",
         barcode: barcode,
         schoolLocation: schoolLocation,
-        classTimes: TimeClass());
-
+        classTimes: classTimes);
+    print("------------------> passou aqui");
+    print(student.classTimes?.seg.isEnable.toString());
     await FirebaseFirestore.instance.collection('students').doc(uid).set({
       'uid': student.uid,
       'name': student.name,
@@ -76,15 +83,17 @@ class StudentController {
       'points': 0,
       'schoolLocation': student.schoolLocation,
       'classTimes': {
-        "seg": {student.classTimes?.seg.isEnable, student.classTimes?.seg.time},
-        "ter": {student.classTimes?.ter.isEnable, student.classTimes?.ter.time},
-        "qua": {student.classTimes?.qua.isEnable, student.classTimes?.qua.time},
-        "qui": {student.classTimes?.qui.isEnable, student.classTimes?.qui.time},
-        "sex": {student.classTimes?.sex.isEnable, student.classTimes?.sex.time},
-        "sab": {student.classTimes?.sab.isEnable, student.classTimes?.sab.time},
-        "dom": {student.classTimes?.dom.isEnable, student.classTimes?.dom.time},
+        'seg': [student.classTimes?.seg.isEnable, student.classTimes?.seg.time],
+        'ter': [student.classTimes?.ter.isEnable, student.classTimes?.ter.time],
+        'qua': [student.classTimes?.qua.isEnable, student.classTimes?.qua.time],
+        'qui': [student.classTimes?.qui.isEnable, student.classTimes?.qui.time],
+        'sex': [student.classTimes?.sex.isEnable, student.classTimes?.sex.time],
+        'sab': [student.classTimes?.sab.isEnable, student.classTimes?.sab.time],
+        'dom': [student.classTimes?.dom.isEnable, student.classTimes?.dom.time],
       },
     });
+    print("------------------> passou aqui tmb2");
+
     return student;
   }
 

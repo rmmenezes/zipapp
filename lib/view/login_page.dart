@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
@@ -19,12 +20,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
-    Authentication.isUserLogged(context);
+    Authentication().isUserLogged(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passController = TextEditingController();
     return WillPopScope(
         onWillPop: null,
         // onWillPop: onWillPop,
@@ -71,8 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                                     const LinearProgressIndicator());
 
                             // logar
-                            User? user = await Authentication.signInWithGoogle(
-                                context: context);
+                            User? user = await Authentication()
+                                .signInWithGoogle(context: context);
                             Loader.hide();
                             // verifica se logou
                             if (user != null) {
@@ -106,6 +110,166 @@ class _LoginPageState extends State<LoginPage> {
                               image: AssetImage("assets/google.png"),
                               height: 22.0)),
                     ),
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: SizedBox(
+                                  width: 300,
+                                  height: 300,
+                                  child: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Login",
+                                              style: Fonts.h4b,
+                                            )),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: TextFormField(
+                                            controller: _emailController,
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            decoration: const InputDecoration(
+                                                labelText: 'Email:',
+                                                icon: Icon(Icons.email)),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: TextFormField(
+                                            obscureText: true,
+                                            controller: _passController,
+                                            keyboardType:
+                                                TextInputType.visiblePassword,
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            decoration: const InputDecoration(
+                                                labelText: 'Senha:',
+                                                icon: Icon(Icons.password)),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              RaisedButton(
+                                                  child:
+                                                      const Text("Cadastrar"),
+                                                  onPressed: () async {
+                                                    Loader.show(context,
+                                                        progressIndicator:
+                                                            const LinearProgressIndicator());
+                                                    // logar
+                                                    User? user = await Authentication()
+                                                        .registerUsingEmailPassword(
+                                                            email:
+                                                                _emailController
+                                                                    .text,
+                                                            password:
+                                                                _passController
+                                                                    .text);
+
+                                                    Loader.hide();
+                                                    // verifica se logou
+                                                    if (user == null) {
+                                                      await CoolAlert.show(
+                                                          loopAnimation: false,
+                                                          context: context,
+                                                          type: CoolAlertType
+                                                              .error,
+                                                          text:
+                                                              "O usuário já está cadastrado, tente novamente e/ou utilize outros métodos de login");
+                                                    } else {
+                                                      // se nao existe o usuario envia o usuario para registo
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  RegisterStudentPage(
+                                                                    nome: '',
+                                                                    email: user
+                                                                        .email,
+                                                                    photo:
+                                                                        'https://i.stack.imgur.com/34AD2.jpg',
+                                                                    uid: user
+                                                                        .uid,
+                                                                  )));
+                                                    }
+                                                  }),
+                                              RaisedButton(
+                                                child: const Text("Entrar"),
+                                                onPressed: () async {
+                                                  Loader.show(context,
+                                                      progressIndicator:
+                                                          const LinearProgressIndicator());
+                                                  // logar
+                                                  User? user = await Authentication()
+                                                      .signInUsingEmailPassword(
+                                                          context: context,
+                                                          email:
+                                                              _emailController
+                                                                  .text,
+                                                          password:
+                                                              _passController
+                                                                  .text);
+                                                  Loader.hide();
+                                                  // verifica se logou
+                                                  if (user == null) {
+                                                    await CoolAlert.show(
+                                                        loopAnimation: false,
+                                                        context: context,
+                                                        type:
+                                                            CoolAlertType.error,
+                                                        text:
+                                                            "As credenciais estão erradas ou o usuário não esta cadastrado");
+                                                  } else {
+                                                    if (await StudentController()
+                                                        .checkIfUserExist(
+                                                            user)) {
+                                                      StudentModel student =
+                                                          await StudentController()
+                                                              .getStudentAsModel(
+                                                                  user.uid);
+
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                              MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      HomePage(
+                                                                          student:
+                                                                              student)));
+                                                    } else {}
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: const Text(
+                        "Outros métodos de login.",
+                        style: TextStyle(
+                          color: Color.fromRGBO(196, 135, 198, 1),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
