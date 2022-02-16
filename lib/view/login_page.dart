@@ -263,10 +263,13 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             });
                       },
-                      child: const Text(
-                        "Outros métodos de login.",
-                        style: TextStyle(
-                          color: Color.fromRGBO(196, 135, 198, 1),
+                      child: const SizedBox(
+                        height: 10,
+                        child: Text(
+                          "Outros métodos de login",
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     )
