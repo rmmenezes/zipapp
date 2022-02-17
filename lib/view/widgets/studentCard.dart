@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/models/student.dart';
+import 'package:zipcursos_app/util/colors.dart';
 import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/widgets/barcode.dart';
 
@@ -53,6 +54,8 @@ class StudentCardRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor colorBlueZip =
+        MaterialColor(0xFF030281, CustomColors().colorBlueZip);
     return SizedBox(
       height: 100,
       child: Card(
@@ -79,7 +82,7 @@ class StudentCardRow extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.cover, image: NetworkImage(student.photo)),
                   borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-                  color: Colors.orange,
+                  color: colorBlueZip,
                 )),
             VerticalDivider(color: colorPodium),
             Flexible(

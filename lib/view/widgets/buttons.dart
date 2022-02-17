@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:zipcursos_app/util/colors.dart';
 
 class buttonGerator extends StatelessWidget {
   final String text;
   final Color fontColor;
   final double fontSize;
-  final Color backgroundColor;
   final Function() onClickFuncion;
   final Image? iconButton;
   final bool outlineButtonTheme;
 
   const buttonGerator({
     this.text = '',
-    this.fontColor = Colors.black,
+    this.fontColor = Colors.white,
     this.fontSize = 18.0,
-    this.backgroundColor = Colors.orange,
     required this.onClickFuncion,
     this.iconButton,
     this.outlineButtonTheme = false,
@@ -34,12 +33,18 @@ class buttonGerator extends StatelessWidget {
         decoration: outlineButtonTheme == false
             ? BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                color: backgroundColor,
-                border: Border.all(color: backgroundColor, width: 2),
+                color: MaterialColor(0xFF030281, CustomColors().colorBlueZip),
+                border: Border.all(
+                    color:
+                        MaterialColor(0xFF030281, CustomColors().colorBlueZip),
+                    width: 2),
               )
             : BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: backgroundColor, width: 2),
+                border: Border.all(
+                    color:
+                        MaterialColor(0xFF030281, CustomColors().colorBlueZip),
+                    width: 2),
               ),
         child: Row(
           mainAxisAlignment: iconButton != null

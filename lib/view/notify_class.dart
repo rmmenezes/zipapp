@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/classDays.dart';
+import 'package:zipcursos_app/util/colors.dart';
 import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'package:zipcursos_app/view/widgets/checkbox.dart';
@@ -119,6 +120,8 @@ class _NotifyClass extends State<NotifyClass> {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor colorBlueZip =
+        MaterialColor(0xFF030281, CustomColors().colorBlueZip);
     return Scaffold(
         backgroundColor: Colors.white,
         persistentFooterButtons: const <Widget>[
@@ -181,16 +184,14 @@ class _NotifyClass extends State<NotifyClass> {
                                                         ClassDays()
                                                                 .classDaysAbrv[
                                                             index]),
-                                                style: Fonts.h5b,
+                                                style: Fonts.h4,
                                               ),
                                             ),
                                             Expanded(
                                                 flex: 3,
                                                 child: buttonGerator(
                                                     fontColor: Colors.white,
-                                                    fontSize: 15,
-                                                    backgroundColor:
-                                                        Colors.orangeAccent,
+                                                    fontSize: 17,
                                                     text: snapshot
                                                         .data!["classTimes"][
                                                             ClassDays()

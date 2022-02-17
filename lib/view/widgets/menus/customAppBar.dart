@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zipcursos_app/util/colors.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -11,9 +12,12 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor colorBlueZip =
+        MaterialColor(0xFF030281, CustomColors().colorBlueZip);
     return Column(
       children: [
         AppBar(
+          backgroundColor: colorBlueZip,
           iconTheme: const IconThemeData(color: Colors.white),
           title: Text(
             title,

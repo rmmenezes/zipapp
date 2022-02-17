@@ -118,11 +118,12 @@ class StudentController {
     return student;
   }
 
-  Future<bool> addPointStudent(String barcode) async {
+  Future<bool> addPointStudent(String barcode, String schoolLocation) async {
     bool res = false;
     await FirebaseFirestore.instance
         .collection('students')
         .where("barcode", isEqualTo: barcode)
+        .where("schoolLocation", isEqualTo: schoolLocation)
         .get()
         .then((value) {
       for (var element in value.docs) {
@@ -160,6 +161,7 @@ class StudentController {
       String schoolLocation) async {
     List<StudentModel> listStudents = await getAllStudents(schoolLocation);
     listStudents.sort((a, b) => b.points.compareTo(a.points));
+
     return listStudents;
   }
 }

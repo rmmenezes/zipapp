@@ -7,6 +7,7 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
+import 'package:zipcursos_app/util/colors.dart';
 import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
@@ -56,6 +57,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor colorBlueZip =
+        MaterialColor(0xFF030281, CustomColors().colorBlueZip);
     return Scaffold(
         backgroundColor: Colors.white,
         persistentFooterButtons: const <Widget>[
@@ -114,8 +117,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                               fit: BoxFit.cover,
                               image: NetworkImage(
                                   photo.replaceAll('=s96-c', '=s400-c'))),
-                      boxShadow: const [
-                        BoxShadow(color: Colors.orange, spreadRadius: 4)
+                      boxShadow: [
+                        BoxShadow(color: colorBlueZip, spreadRadius: 4)
                       ],
                       borderRadius:
                           const BorderRadius.all(Radius.circular(100.0)),
@@ -151,7 +154,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                 const SizedBox(height: 20),
                 TextFormField(
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null || value.isEmpty || value.length < 4) {
                       return 'Preencha com seu número da Zip';
                     }
                     return null;

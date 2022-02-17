@@ -23,6 +23,7 @@ class _RankingPageState extends State<RankingPage> {
   initState() {
     super.initState();
     selected = "Mirante do Paranapanema";
+  
     studentsSortedByPoints =
         StudentController().getAllStudentsOrdenByPoints(selected);
   }

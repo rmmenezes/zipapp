@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
+import 'package:zipcursos_app/util/colors.dart';
 import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/profile_page.dart';
@@ -14,13 +15,15 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor colorBlueZip =
+        MaterialColor(0xFF030281, CustomColors().colorBlueZip);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           Container(
               height: 125.0,
-              color: Colors.orange,
+              color: colorBlueZip,
               child: DrawerHeader(
                   margin: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
@@ -94,7 +97,8 @@ class MyDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SetGrade10Page()))
+                            builder: (context) =>
+                                SetGrade10Page(student: student)))
                   },
                 )
               : const SizedBox(),

@@ -3,6 +3,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
+import 'package:zipcursos_app/util/colors.dart';
 import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
@@ -37,6 +38,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor colorBlueZip =
+        MaterialColor(0xFF030281, CustomColors().colorBlueZip);
     return Scaffold(
       backgroundColor: Colors.white,
       persistentFooterButtons: const <Widget>[
@@ -97,10 +100,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             fit: BoxFit.cover, image: NetworkImage(photo)),
                     boxShadow: [
                       editable == true
-                          ? const BoxShadow(
-                              color: Colors.orange, spreadRadius: 4)
-                          : const BoxShadow(
-                              color: Colors.orange, spreadRadius: 0),
+                          ? BoxShadow(color: colorBlueZip, spreadRadius: 4)
+                          : BoxShadow(color: colorBlueZip, spreadRadius: 0),
                     ],
                     borderRadius:
                         const BorderRadius.all(Radius.circular(100.0)),
@@ -134,9 +135,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 enabled: editable,
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.orange, width: 1),
+                      borderSide: BorderSide(color: colorBlueZip, width: 1),
                     ),
                     labelText: 'Nome Completo:',
                     icon: Icon(Icons.account_circle_outlined)),
@@ -177,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 20),
               editable == true
                   ? buttonGerator(
-                      backgroundColor: Colors.orange.shade200,
+                     
                       text: "Salvar Edição",
                       onClickFuncion: () async {
                         if (_formKey.currentState!.validate()) {
