@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/colors.dart';
+import 'package:zipcursos_app/util/fonts.dart';
 import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/widgets/buttons.dart';
 import 'widgets/menus/customAppBar.dart';
@@ -123,7 +124,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       Text("Editar")
                     ]),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
+              Text("Meus Pontos: " + widget.student.points.toString(),
+                  style: Fonts.h5b),
+              const SizedBox(height: 20),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -178,7 +182,6 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 20),
               editable == true
                   ? buttonGerator(
-                     
                       text: "Salvar Edição",
                       onClickFuncion: () async {
                         if (_formKey.currentState!.validate()) {

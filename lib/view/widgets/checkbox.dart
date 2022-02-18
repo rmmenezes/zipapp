@@ -106,7 +106,7 @@ class _CheckButtomCustomState extends State<CheckButtomCustom> {
               updateStatusCheckBox(widget.mapValuesClassTimes, widget.student)
                   .then((value) async {
                 await flutterLocalNotificationsPlugin
-                    .cancel(_convertDay(widget.title.toLowerCase()));
+                    .cancel(_convertDay(widget.title.toLowerCase()) + 100);
               });
               widget.daysSelected.add(widget.title.toLowerCase());
             });

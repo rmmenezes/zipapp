@@ -27,6 +27,10 @@ class StudentCard extends StatelessWidget {
               const SizedBox(height: 10),
               const Image(
                   image: AssetImage("assets/logo_zip.jpg"), height: 100),
+              student.level == "admin"
+                  ? Text("PROFESSOR" + student.points.toString(),
+                      style: Fonts.h5b)
+                  : const SizedBox(),
               const SizedBox(height: 20),
               Image.network(student.photo,
                   fit: BoxFit.cover, height: 220.0, width: 220.0),
