@@ -30,9 +30,7 @@ class _ListTimesAlertsState extends State<ListTimesAlerts> {
     var time = Time(int.parse(hh), int.parse(mm), 0);
     var code = _convertDayExtra(dayOfWeek);
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-        'show weekly channel id',
-        'show weekly channel name',
-        'show weekly description');
+        'show weekly channel id', 'show weekly channel name');
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails();
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
@@ -49,7 +47,7 @@ class _ListTimesAlertsState extends State<ListTimesAlerts> {
 
   _initialisation() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
+        AndroidInitializationSettings('@mipmap/launcher_icon');
 
     InitializationSettings initializationSettings =
         const InitializationSettings(android: initializationSettingsAndroid);
@@ -134,7 +132,7 @@ class _ListTimesAlertsState extends State<ListTimesAlerts> {
                 Navigator.of(context).push(
                   showPicker(
                     context: context,
-                    value: _time,
+                    value: _time.replacing(hour: 0, minute: 0),
                     onChange: (newValue) {
                       setState(() {
                         _time = newValue;
