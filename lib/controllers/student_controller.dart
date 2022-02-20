@@ -15,7 +15,7 @@ class StudentController {
       source = ImageSource.gallery;
     }
     PickedFile? pickedFile = await ImagePicker().getImage(
-      imageQuality: 35,
+      imageQuality: 22,
       source: source,
     );
     return pickedFile;
@@ -141,7 +141,9 @@ class StudentController {
 
   Future<List<StudentModel>> getAllStudents(String schoolLocation) async {
     List<StudentModel> listStudents = [];
-    var collectionRef = FirebaseFirestore.instance.collection('students');
+    var collectionRef = FirebaseFirestore.instance
+        .collection('students')
+        .where('level', isEqualTo: 'student');
     final allStudents = await collectionRef.get();
     for (int i = 0; i < allStudents.docs.length; i++) {
       StudentModel studentTemp =
