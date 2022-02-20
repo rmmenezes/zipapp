@@ -3,6 +3,7 @@ import 'package:zipcursos_app/controllers/student_controller.dart';
 import 'package:zipcursos_app/models/student.dart';
 import 'package:zipcursos_app/util/colors.dart';
 import 'package:zipcursos_app/util/fonts.dart';
+import 'package:zipcursos_app/view/clean_ranking.dart';
 import 'package:zipcursos_app/view/home_page.dart';
 import 'package:zipcursos_app/view/profile_page.dart';
 import '../../notify_class.dart';
@@ -102,6 +103,16 @@ class MyDrawer extends StatelessWidget {
                   },
                 )
               : const SizedBox(),
+          // ListTile(
+          //   leading: const Icon(Icons.dashboard_rounded),
+          //   title: const Text('Limpar Ranking'),
+          //   onTap: () => {
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (context) => CleanRankingPage(student: student)))
+          //   },
+          // ),
         ],
       ),
     );

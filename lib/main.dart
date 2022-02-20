@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Zip Cgghdfursos',
+        title: 'Zip Cursos',
         theme:  ThemeData(
             primarySwatch: Colors.blue, backgroundColor: Colors.red)
 ,        home: const LoginPage());

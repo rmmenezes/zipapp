@@ -18,12 +18,14 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   late Future<List<StudentModel>> studentsSortedByPoints;
   late String selected;
+  MaterialColor colorBlueZip =
+      MaterialColor(0xFF030281, CustomColors().colorBlueZip);
 
   @override
   initState() {
     super.initState();
     selected = "Mirante do Paranapanema";
-  
+
     studentsSortedByPoints =
         StudentController().getAllStudentsOrdenByPoints(selected);
   }
@@ -45,50 +47,56 @@ class _RankingPageState extends State<RankingPage> {
             Text("Escola Zip Cursos Profissionalizantes", style: Fonts.h3),
             Text(widget.student.schoolLocation, style: Fonts.h4),
             const SizedBox(height: 10.0),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     children: <Widget>[
-            //       Expanded(
-            //           child: ElevatedButton(
-            //         onPressed: () {
-            //           setState(() {
-            //             selected = "Mirante do Paranapanema";
-            //             studentsSortedByPoints = StudentController()
-            //                 .getAllStudentsOrdenByPoints(selected);
-            //           });
-            //         },
-            //         child: const Text("Mirante"),
-            //         style: ElevatedButton.styleFrom(
-            //           primary: selected == "Mirante do Paranapanema"
-            //               ? Colors.orange
-            //               : Colors.orangeAccent,
-            //           onPrimary: Colors.white,
-            //         ),
-            //       )),
-            //       const SizedBox(
-            //         width: 10,
-            //       ),
-            //       Expanded(
-            //           child: ElevatedButton(
-            //         onPressed: () {
-            //           setState(() {
-            //             selected = "Presidente Bernardes";
-            //             studentsSortedByPoints = StudentController()
-            //                 .getAllStudentsOrdenByPoints(selected);
-            //           });
-            //         },
-            //         child: const Text("Bernardes"),
-            //         style: ElevatedButton.styleFrom(
-            //           primary: selected == "Presidente Bernardes"
-            //               ? Colors.orange
-            //               : Colors.orangeAccent,
-            //           onPrimary: Colors.white,
-            //         ),
-            //       )),
-            //     ],
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        selected = "Mirante do Paranapanema";
+                        studentsSortedByPoints = StudentController()
+                            .getAllStudentsOrdenByPoints(selected);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => build(context)));
+                      });
+                    },
+                    child: const Text("Mirante"),
+                    style: ElevatedButton.styleFrom(
+                      primary: selected == "Mirante do Paranapanema"
+                          ? colorBlueZip
+                          : colorBlueZip[500],
+                      onPrimary: Colors.white,
+                    ),
+                  )),
+                  const SizedBox(width: 10),
+                  Expanded(
+                      child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        selected = "Presidente Bernardes";
+                        studentsSortedByPoints = StudentController()
+                            .getAllStudentsOrdenByPoints(selected);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => build(context)));
+                      });
+                    },
+                    child: const Text("Bernardes"),
+                    style: ElevatedButton.styleFrom(
+                      primary: selected == "Presidente Bernardes"
+                          ? colorBlueZip
+                          : colorBlueZip[500],
+                      onPrimary: Colors.white,
+                    ),
+                  )),
+                ],
+              ),
+            ),
             const Divider(),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,9 +124,7 @@ class _RankingPageState extends State<RankingPage> {
                           shape: BoxShape.rectangle)),
                 ]),
             const Divider(),
-            ListStudentsRankingCardsRow(
-              items: studentsSortedByPoints,
-            ),
+            ListStudentsRankingCardsRow(items: studentsSortedByPoints),
           ],
         ),
       ),
